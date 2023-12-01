@@ -8,12 +8,14 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     required this.controller,
     this.isPassword = false,
     this.keyboardType = TextInputType.none,
+    this.cursorColor,
     this.onChange,
   });
   final Function? onChange;
   final String label;
   final TextInputType keyboardType;
   final bool isPassword;
+  final Color? cursorColor;
   final TextEditingController controller;
   @override
   State<TextFormFieldCustomWidget> createState() =>
@@ -45,6 +47,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: widget.cursorColor ?? Colors.white,
       controller: widget.controller,
       obscureText: (widget.isPassword && showText),
       focusNode: _focus,

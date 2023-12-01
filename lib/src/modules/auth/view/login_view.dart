@@ -85,6 +85,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
               ),
               const SizedBox(height: 20),
               TextFormFieldCustomWidget(
+                cursorColor: Colors.white,
                 label: "Código de empleado",
                 controller: userCode,
                 keyboardType: TextInputType.number,
@@ -94,6 +95,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
               ),
               const SizedBox(height: 30),
               TextFormFieldCustomWidget(
+                cursorColor: Colors.white,
                 label: "Contraseña",
                 controller: password,
                 isPassword: true,
