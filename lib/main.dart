@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/common/layout/dashboard/dashboard_layout.dart';
 import 'package:marcacion_admin/src/common/layout/splash/splash_layout.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 
-//TODO: ESTO NO DEBE QUEDAR ASI
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
 import 'package:marcacion_admin/src/modules/auth/viewmodel/auth_provider.dart';
-import 'package:marcacion_admin/src/modules/views.dart';
 import 'package:marcacion_admin/src/routes/router.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
                   return const SplashLayout();
                 }
                 if (authProvider.authStatus == AuthStatus.authenticated) {
-                  return const DashboardView();
+                  return DashboardLayout(child: child!);
                 } else {
                   return child!; //Login
                 }

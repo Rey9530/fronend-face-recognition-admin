@@ -20,3 +20,4 @@ const whiteColor = Color(0XFFFFFFFF);
 
 ///
 const infoBackground = Color(0XFF3C4E65);
+const userWidgetBackground = Color(0XFFF2F2F2);

@@ -10,8 +10,10 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     this.keyboardType = TextInputType.none,
     this.cursorColor,
     this.onChange,
+    this.onFieldSubmitted,
   });
   final Function? onChange;
+  final Function(String)? onFieldSubmitted;
   final String label;
   final TextInputType keyboardType;
   final bool isPassword;
@@ -47,6 +49,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onFieldSubmitted: widget.onFieldSubmitted,
       cursorColor: widget.cursorColor ?? Colors.white,
       controller: widget.controller,
       obscureText: (widget.isPassword && showText),

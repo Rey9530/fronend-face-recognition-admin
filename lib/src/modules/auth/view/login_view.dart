@@ -85,6 +85,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
               ),
               const SizedBox(height: 20),
               TextFormFieldCustomWidget(
+                onFieldSubmitted: (_) => onFormSubmit(providerAuth),
                 cursorColor: Colors.white,
                 label: "Código de empleado",
                 controller: userCode,
@@ -95,6 +96,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
               ),
               const SizedBox(height: 30),
               TextFormFieldCustomWidget(
+                onFieldSubmitted: (_) => onFormSubmit(providerAuth),
                 cursorColor: Colors.white,
                 label: "Contraseña",
                 controller: password,
@@ -108,16 +110,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
                 title: 'Ingresar',
                 disable: !isReady,
                 loading: loading,
-                onPress: () async {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    if (loading) return;
-                    loading = true;
-                    setState(() {});
-                    await providerAuth.login(userCode.text, password.text);
-                    loading = false;
-                    setState(() {});
-                  }
-                },
+                onPress: () => onFormSubmit(providerAuth),
               ),
               const SizedBox(height: 40),
               const _InfoFooterWidget()
@@ -126,6 +119,17 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
         ),
       ),
     );
+  }
+
+  void onFormSubmit(providerAuth) async {
+    if (_formKey.currentState?.validate() ?? false) {
+      if (loading) return;
+      loading = true;
+      setState(() {});
+      await providerAuth.login(userCode.text, password.text);
+      loading = false;
+      setState(() {});
+    }
   }
 }
 
