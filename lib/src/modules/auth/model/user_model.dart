@@ -40,9 +40,6 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    print("json22");
-    print(json);
-    print("json22");
     return User(
       usrCodigo: json["usr_codigo"],
       usrNombres: json["usr_nombres"],

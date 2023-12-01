@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                 if (authProvider.authStatus == AuthStatus.authenticated) {
                   return const DashboardView();
                 } else {
-                  return const LoginView();
+                  return child!; //Login
                 }
               },
             ),

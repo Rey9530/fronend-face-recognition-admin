@@ -18,7 +18,7 @@ class DioConexion {
   static Future get_(String endpoint) async {
     Response response;
     response = await _dio.get(endpoint);
-    return response;
+    return response.data;
   }
 
   static Future post_(String endpoint, Map<String, dynamic> data) async {

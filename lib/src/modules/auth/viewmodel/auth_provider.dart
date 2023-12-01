@@ -14,22 +14,27 @@ class AuthProvider extends ChangeNotifier {
   }
 
   User? user;
-  login(String email, String password) {
-    var data = {"user_code": "12345678", "password": "12345678"};
+  login(String userCode, String password) async {
+    var data = {
+      "user_code": userCode,
+      "password": password,
+    };
 
-    DioConexion.post_('/users/login', data).then((json) {
-      final authResponse = UserModel.fromJson(json);
+    try {
+      final resp = await DioConexion.post_('/users/login', data);
+      final authResponse = UserModel.fromJson(resp);
       user = authResponse.data;
       authStatus = AuthStatus.authenticated;
       LocalStorage.prefs.setString('token', user!.token);
       DioConexion.configureDio();
       NavigationService.replaceTo(Flurorouter.dashboardRoute);
 
-      // notifyListeners();
-    }).catchError((e) {
-      print('error en: $e');
+      notifyListeners();
+      return true;
+    } catch (e) {
       NotificationsService.showSnackbarError('Usuario / Password no válidos');
-    });
+      return false;
+    }
   }
 
   Future<bool> isAuthenticated() async {
@@ -38,7 +43,7 @@ class AuthProvider extends ChangeNotifier {
     if (token == null) {
       authStatus = AuthStatus.notAuthenticated;
       notifyListeners();
-      print("Entramos aquoi");
+      NavigationService.replaceTo(Flurorouter.loginRoute);
       return false;
     }
 
@@ -48,11 +53,11 @@ class AuthProvider extends ChangeNotifier {
       LocalStorage.prefs.setString('token', authReponse.data.token);
       user = authReponse.data;
       authStatus = AuthStatus.authenticated;
-      print(user?.token);
       notifyListeners();
       return true;
     } catch (e) {
       authStatus = AuthStatus.notAuthenticated;
+      NavigationService.replaceTo(Flurorouter.loginRoute);
       notifyListeners();
       return false;
     }

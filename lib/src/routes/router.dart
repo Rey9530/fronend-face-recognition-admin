@@ -19,7 +19,11 @@ class Flurorouter {
       handler: AuthHandlers.login,
       transitionType: TransitionType.none,
     );
-    // router.define(loginRoute, handler: AdminHandlers.login, transitionType: TransitionType.none );
+    router.define(
+      loginRoute,
+      handler: AuthHandlers.login,
+      transitionType: TransitionType.none,
+    );
     // router.define(registerRoute, handler: AdminHandlers.register, transitionType: TransitionType.none );
 
     // Dashboard
@@ -31,5 +35,6 @@ class Flurorouter {
 
     // 404
     // router.notFoundHandler = NoPageFoundHandlers.noPageFound;
+    router.notFoundHandler = AuthHandlers.login;
   }
 }

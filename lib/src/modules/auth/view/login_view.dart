@@ -108,6 +108,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
                 loading: loading,
                 onPress: () async {
                   if (_formKey.currentState?.validate() ?? false) {
+                    if (loading) return;
                     loading = true;
                     setState(() {});
                     await providerAuth.login(userCode.text, password.text);
