@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
-
-String userModelToJson(UserModel data) => json.encode(data.toJson());
-
 class UserModel {
   final User data;
   final int status;
@@ -15,11 +9,13 @@ class UserModel {
     required this.message,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        data: User.fromJson(json["data"]),
-        status: json["status"],
-        message: json["message"],
-      );
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      data: User.fromJson(json["data"]),
+      status: json["status"],
+      message: json["message"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "data": data.toJson(),
@@ -43,13 +39,18 @@ class User {
     required this.token,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        usrCodigo: json["usr_codigo"],
-        usrNombres: json["usr_nombres"],
-        usrApellidos: json["usr_apellidos"],
-        usrEstado: json["usr_estado"],
-        token: json["token"],
-      );
+  factory User.fromJson(Map<String, dynamic> json) {
+    print("json22");
+    print(json);
+    print("json22");
+    return User(
+      usrCodigo: json["usr_codigo"],
+      usrNombres: json["usr_nombres"],
+      usrApellidos: json["usr_apellidos"],
+      usrEstado: json["usr_estado"],
+      token: json["token"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "usr_codigo": usrCodigo,

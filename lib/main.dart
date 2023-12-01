@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/common/layout/splash/splash_layout.dart';
+import 'package:marcacion_admin/src/common/services/services.dart';
 
 //TODO: ESTO NO DEBE QUEDAR ASI
-import 'package:marcacion_admin/src/auth/view/login_view.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
+import 'package:marcacion_admin/src/modules/auth/viewmodel/auth_provider.dart';
+import 'package:marcacion_admin/src/modules/views.dart';
+import 'package:marcacion_admin/src/routes/router.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await LocalStorage.configurePrefs();
+  Flurorouter.configureRoutes();
+  DioConexion.configureDio();
   runApp(
     const AppProvider(
       child: MyApp(),
@@ -17,14 +25,36 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: setTheme(),
-      home: const LoginView(),
+      initialRoute: '/',
+      onGenerateRoute: Flurorouter.router.generator,
+      navigatorKey: NavigationService.navigatorKey,
+      scaffoldMessengerKey: NotificationsService.messengerKey,
+      builder: (_, child) {
+        return Overlay(
+          initialEntries: [
+            OverlayEntry(
+              builder: (context) {
+                final authProvider = Provider.of<AuthProvider>(context);
+
+                if (authProvider.authStatus == AuthStatus.checking) {
+                  return const SplashLayout();
+                }
+                if (authProvider.authStatus == AuthStatus.authenticated) {
+                  return const DashboardView();
+                } else {
+                  return const LoginView();
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

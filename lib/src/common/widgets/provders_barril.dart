@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcacion_admin/src/auth/viewmodel/provider_auth.dart';
+import 'package:marcacion_admin/src/modules/auth/viewmodel/provider_auth.dart';
 import 'package:provider/provider.dart';
 
 class AppProvider extends StatelessWidget {

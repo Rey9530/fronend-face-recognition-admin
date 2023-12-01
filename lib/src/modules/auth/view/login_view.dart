@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marcacion_admin/src/auth/viewmodel/provider_auth.dart';
+import 'package:marcacion_admin/src/modules/auth/viewmodel/provider_auth.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
