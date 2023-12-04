@@ -5,14 +5,15 @@ import 'package:marcacion_admin/src/modules/views.dart';
 import 'package:marcacion_admin/src/routes/router.dart';
 import 'package:provider/provider.dart';
 
-class DashboardHandlers {
-  static Handler dashboard = Handler(handlerFunc: (context, params) {
+class EmployesHandlers {
+  static Handler list = Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
+
     Provider.of<SideMenuProvider>(context, listen: false)
-        .setCurrentPageUrl(Flurorouter.dashboardRoute);
+        .setCurrentPageUrl(Flurorouter.employesRoute);
 
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      return const DashboardView();
+      return const EmployesView();
     } else {
       return const LoginView();
     }

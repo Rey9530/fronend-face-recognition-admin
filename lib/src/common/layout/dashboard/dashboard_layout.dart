@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/common/services/services.dart';
+import 'package:marcacion_admin/src/routes/router.dart';
+import 'package:provider/provider.dart';
 
 class DashboardLayout extends StatelessWidget {
   const DashboardLayout({
@@ -45,6 +48,7 @@ class _SideBarMenuWidgetState extends State<_SideBarMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final sideMenuProvider = Provider.of<SideMenuProvider>(context);
     return Column(
       children: [
         Padding(
@@ -58,34 +62,24 @@ class _SideBarMenuWidgetState extends State<_SideBarMenuWidget> {
           ),
         ),
         ItemsMenuWidget(
-          active: menu == 'dashboard',
+          active: sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
           title: 'Dashboard',
           iconName: 'dashboard',
-          onPress: () {
-            setState(() {
-              menu = 'dashboard';
-            });
-          },
+          onPress: () =>
+              NavigationService.replaceTo(Flurorouter.dashboardRoute),
         ),
         ItemsMenuWidget(
-          active: menu == 'company',
+          active: sideMenuProvider.currentPage == Flurorouter.companiesRoute,
           title: 'empresas',
           iconName: 'company',
-          onPress: () {
-            setState(() {
-              menu = 'company';
-            });
-          },
+          onPress: () =>
+              NavigationService.replaceTo(Flurorouter.companiesRoute),
         ),
         ItemsMenuWidget(
-          active: menu == 'employes',
+          active: sideMenuProvider.currentPage == Flurorouter.employesRoute,
           title: 'Empleados',
           iconName: 'employes',
-          onPress: () {
-            setState(() {
-              menu = 'employes';
-            });
-          },
+          onPress: () => NavigationService.replaceTo(Flurorouter.employesRoute),
         ),
         ItemsMenuWidget(
           active: menu == 'proyect',
@@ -162,12 +156,11 @@ class ItemsMenuWidget extends StatelessWidget {
   final Function onPress;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onPress();
-      },
+    return InkWell(
+      onTap: active ? null : () => onPress(),
+      borderRadius: BorderRadius.circular(16),
       child: active
-          ? Container(
+          ? AnimatedContainer(
               width: 168,
               height: 95,
               decoration: const BoxDecoration(
@@ -177,6 +170,7 @@ class ItemsMenuWidget extends StatelessWidget {
                   bottomLeft: Radius.circular(16),
                 ),
               ),
+              duration: const Duration(seconds: 2),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

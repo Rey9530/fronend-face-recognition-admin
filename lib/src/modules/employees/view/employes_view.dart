@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
 
-class DashboardView extends StatelessWidget {
-  const DashboardView({super.key});
+class EmployesView extends StatelessWidget {
+  const EmployesView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,10 +10,10 @@ class DashboardView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         BreadCrumWidget(
-          title: 'Dashboar',
+          title: 'Empleados',
         ),
         Text(
-          "Dashboar",
+          "EmployesView",
           style: TextStyle(color: Colors.red),
         ),
       ],

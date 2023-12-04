@@ -1,6 +1,8 @@
 import 'package:fluro/fluro.dart';
 import 'package:marcacion_admin/src/routes/admin_handlers.dart';
+import 'package:marcacion_admin/src/routes/companies_handlers.dart';
 import 'package:marcacion_admin/src/routes/dashboard_handlers.dart';
+import 'package:marcacion_admin/src/routes/employes_handlers.dart';
 
 class Flurorouter {
   static final FluroRouter router = FluroRouter();
@@ -11,6 +13,8 @@ class Flurorouter {
   static String loginRoute = '/auth/login';
   // Dashboard
   static String dashboardRoute = '/dashboard';
+  static String employesRoute = '/employes';
+  static String companiesRoute = '/companies';
 
   static void configureRoutes() {
     // Auth Routes
@@ -30,6 +34,20 @@ class Flurorouter {
     router.define(
       dashboardRoute,
       handler: DashboardHandlers.dashboard,
+      transitionType: TransitionType.fadeIn,
+    );
+
+    // Dashboard
+    router.define(
+      employesRoute,
+      handler: EmployesHandlers.list,
+      transitionType: TransitionType.fadeIn,
+    );
+
+    // Dashboard
+    router.define(
+      companiesRoute,
+      handler: CompaniesHandlers.list,
       transitionType: TransitionType.fadeIn,
     );
 
