@@ -106,7 +106,7 @@ class _FormLoginWidgetState extends State<_FormLoginWidget> {
                 },
               ),
               const SizedBox(height: 25),
-              BtnWidget(
+              _BtnWidget(
                 title: 'Ingresar',
                 disable: !isReady,
                 loading: loading,
@@ -167,22 +167,17 @@ class _InfoFooterWidget extends StatelessWidget {
   }
 }
 
-class BtnWidget extends StatelessWidget {
-  const BtnWidget({
-    super.key,
-    this.width = double.infinity,
-    this.height = 50,
+class _BtnWidget extends StatelessWidget {
+  const _BtnWidget({
     required this.title,
     required this.onPress,
     this.disable = false,
     this.loading = false,
   });
-  final double width;
   final bool disable;
   final bool loading;
 
   final String title;
-  final double height;
   final Function onPress;
 
   @override

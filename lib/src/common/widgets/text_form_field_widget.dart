@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/const/styles.dart';
+import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 
 class TextFormFieldCustomWidget extends StatefulWidget {
   const TextFormFieldCustomWidget({
     super.key,
     required this.label,
     required this.controller,
+    this.hinText,
     this.isPassword = false,
     this.keyboardType = TextInputType.none,
     this.cursorColor,
     this.onChange,
     this.onFieldSubmitted,
+    this.isDark = false,
   });
+  final bool isDark;
   final Function? onChange;
   final Function(String)? onFieldSubmitted;
   final String label;
+  final String? hinText;
   final TextInputType keyboardType;
   final bool isPassword;
   final Color? cursorColor;
@@ -50,7 +55,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       onFieldSubmitted: widget.onFieldSubmitted,
-      cursorColor: widget.cursorColor ?? Colors.white,
+      cursorColor: widget.isDark ? getTheme(context).primary : Colors.white,
       controller: widget.controller,
       obscureText: (widget.isPassword && showText),
       focusNode: _focus,
@@ -69,12 +74,13 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
           widget.onChange!(valor);
         }
       },
-      style: const TextStyle(
-        color: Colors.white,
+      style: TextStyle(
+        color: widget.isDark ? getTheme(context).primary : Colors.white,
         fontWeight: FontWeight.w500,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: () {
@@ -87,22 +93,34 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
                         Icons.visibility_off,
                         color: (_focus.hasFocus ||
                                 widget.controller.text.isNotEmpty)
-                            ? Colors.white
-                            : primario.withOpacity(0.6),
+                            ? widget.isDark
+                                ? getTheme(context).primary
+                                : Colors.white
+                            : (widget.isDark
+                                    ? getTheme(context).primary
+                                    : Colors.white)
+                                .withOpacity(0.6),
                       )
                     : Icon(
                         Icons.visibility,
                         color: (_focus.hasFocus ||
                                 widget.controller.text.isNotEmpty)
-                            ? Colors.white
-                            : primario.withOpacity(0.6),
+                            ? widget.isDark
+                                ? getTheme(context).primary
+                                : Colors.white
+                            : (widget.isDark
+                                    ? getTheme(context).primary
+                                    : Colors.white)
+                                .withOpacity(0.6),
                       ),
               )
             : null,
         labelText: widget.label,
-        border: const OutlineInputBorder(
+        hintText: widget.hinText,
+        hintStyle: const TextStyle(color: Color(0XFFDFDFDF)),
+        border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: widget.isDark ? getTheme(context).primary : Colors.white,
             width: 4,
           ),
         ),
@@ -112,15 +130,15 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
             width: 2,
           ),
         ),
-        enabledBorder: const OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: widget.isDark ? getTheme(context).primary : Colors.white,
             width: 1,
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: widget.isDark ? getTheme(context).primary : Colors.white,
             width: 2,
           ),
         ),
@@ -132,10 +150,11 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
         ),
         labelStyle: TextStyle(
           color: (_focus.hasFocus || widget.controller.text.isNotEmpty)
-              ? isError
-                  ? error
+              ? widget.isDark
+                  ? getTheme(context).primary
                   : Colors.white
-              : primario.withOpacity(0.6),
+              : (widget.isDark ? getTheme(context).primary : Colors.white),
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

@@ -6,17 +6,20 @@ class EmployesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        BreadCrumWidget(
-          title: 'Empleados',
-        ),
-        Text(
-          "EmployesView",
-          style: TextStyle(color: Colors.red),
-        ),
-      ],
+    return const Padding(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          BreadCrumWidget(
+            title: 'Empleados',
+          ),
+          Text(
+            "EmployesView",
+            style: TextStyle(color: Colors.red),
+          ),
+        ],
+      ),
     );
   }
 }

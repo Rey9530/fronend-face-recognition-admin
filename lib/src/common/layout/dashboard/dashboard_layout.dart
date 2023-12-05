@@ -25,7 +25,6 @@ class DashboardLayout extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                padding: const EdgeInsets.all(20),
                 child: child,
               ),
             ),
