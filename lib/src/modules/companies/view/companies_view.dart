@@ -36,12 +36,14 @@ class _BodyCompaniesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       width: size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 30),
           Text(
             "Agregar nueva empresa",
             style: TextStyle(
