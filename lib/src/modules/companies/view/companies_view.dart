@@ -209,19 +209,23 @@ class _ListEmployesWidgetState extends State<ListEmployesWidget> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CompaniesProvider>(context);
+    var style = TextStyle(
+      fontWeight: FontWeight.w600,
+      color: getTheme(context).primary,
+    );
     return SizedBox(
       width: double.infinity,
       child: SingleChildScrollView(
         child: PaginatedDataTable(
           headingRowColor: MaterialStateColor.resolveWith(
               (states) => const Color(0XFFF3F3F4)),
-          columns: const [
-            DataColumn(label: Text('Nombre de la empresa')),
-            DataColumn(label: Text('Dirección de la empresa')),
-            DataColumn(label: Text('Persona de contacto')),
-            DataColumn(label: Text('Correo electrónico')),
-            DataColumn(label: Text('Teléfono de contacto')),
-            DataColumn(label: Text('Acciones')),
+          columns: [
+            DataColumn(label: Text('Nombre de la empresa', style: style)),
+            DataColumn(label: Text('Dirección de la empresa', style: style)),
+            DataColumn(label: Text('Persona de contacto', style: style)),
+            DataColumn(label: Text('Correo electrónico', style: style)),
+            DataColumn(label: Text('Teléfono de contacto', style: style)),
+            DataColumn(label: Text('Acciones', style: style)),
           ],
           // header: const SizedBox(),
           // arrowHeadColor: const Color(0XFFF3F3F4),

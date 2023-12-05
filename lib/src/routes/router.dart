@@ -15,6 +15,7 @@ class Flurorouter {
   static String dashboardRoute = '/dashboard';
   static String employesRoute = '/employes';
   static String companiesRoute = '/companies';
+  static String contractsRoute = '/contracts';
 
   static void configureRoutes() {
     // Auth Routes

@@ -27,12 +27,13 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.4.0
   fluro: ^2.0.5
   flutter:
     sdk: flutter
+  intl: ^0.18.1
   provider: ^6.1.1
   shared_preferences: ^2.2.2
 

@@ -18,6 +18,9 @@ const primarioText = Color(0XFFADB5BE);
 const activeBtn = Color(0XFFD1D2D3);
 const whiteColor = Color(0XFFFFFFFF);
 
+//Text <P> color
+const textGray = Color(0XFF454B54);
+
 ///
 const infoBackground = Color(0XFF3C4E65);
 const userWidgetBackground = Color(0XFFF2F2F2);

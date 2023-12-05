@@ -14,6 +14,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     this.onChange,
     this.onFieldSubmitted,
     this.isDark = false,
+    this.floatingLabelBehavior = FloatingLabelBehavior.always,
   });
   final bool isDark;
   final Function? onChange;
@@ -24,6 +25,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
   final bool isPassword;
   final Color? cursorColor;
   final TextEditingController controller;
+  final FloatingLabelBehavior? floatingLabelBehavior;
   @override
   State<TextFormFieldCustomWidget> createState() =>
       _TextFormFieldCustomWidgetState();
@@ -80,7 +82,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.always,
+        floatingLabelBehavior: widget.floatingLabelBehavior,
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: () {
