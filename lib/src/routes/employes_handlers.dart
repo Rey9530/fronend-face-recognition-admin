@@ -32,4 +32,17 @@ class EmployesHandlers {
       return const LoginView();
     }
   });
+
+  static Handler editEmploye = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.employesRoute);
+
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      String? uuid = params['uuid']?.first;
+      return AddEmployeView(uuid: uuid);
+    } else {
+      return const LoginView();
+    }
+  });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:marcacion_admin/src/common/const/styles.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 
@@ -16,6 +17,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     this.isDark = false,
     this.suffixIcon,
     this.floatingLabelBehavior = FloatingLabelBehavior.always,
+    this.inputFormatters,
   });
   final bool isDark;
   final Function? onChange;
@@ -28,6 +30,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
   final TextEditingController controller;
   final FloatingLabelBehavior? floatingLabelBehavior;
   final Widget? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
   @override
   State<TextFormFieldCustomWidget> createState() =>
       _TextFormFieldCustomWidgetState();
@@ -58,6 +61,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: widget.inputFormatters,
       onFieldSubmitted: widget.onFieldSubmitted,
       cursorColor: widget.isDark ? getTheme(context).primary : Colors.white,
       controller: widget.controller,
@@ -66,7 +70,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? valor) {
         var data = (valor == null || valor.isEmpty)
-            ? "Esta campo es requerido "
+            ? "Este campo es requerido "
             : null;
         return data;
       },

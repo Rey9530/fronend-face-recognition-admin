@@ -15,6 +15,7 @@ class Flurorouter {
   static String dashboardRoute = '/dashboard';
   static String employesRoute = '/employes';
   static String employeAddRoute = '/employes/create';
+  static String employeEditRoute = '/employes/update/:uuid';
   static String companiesRoute = '/companies';
   static String contractsRoute = '/contracts';
 
@@ -30,7 +31,6 @@ class Flurorouter {
       handler: AuthHandlers.login,
       transitionType: TransitionType.none,
     );
-    // router.define(registerRoute, handler: AdminHandlers.register, transitionType: TransitionType.none );
 
     // Dashboard
     router.define(
@@ -49,6 +49,12 @@ class Flurorouter {
     router.define(
       employeAddRoute,
       handler: EmployesHandlers.addEmploye,
+      transitionType: TransitionType.none,
+    );
+
+    router.define(
+      employeEditRoute,
+      handler: EmployesHandlers.editEmploye,
       transitionType: TransitionType.none,
     );
 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
+import 'package:marcacion_admin/src/common/services/navigation_service.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
 import 'package:marcacion_admin/src/modules/employees/model/employes_model.dart';
 import 'package:marcacion_admin/src/modules/employees/viewmodel/employes_provider.dart';
@@ -33,8 +34,8 @@ class EmployesTDS extends DataTableSource {
             children: [
               IconButton(
                 onPressed: () {
-                  // Provider.of<EmployesProvider>(context, listen: false)
-                  //     .edit(employe);
+                  NavigationService.navigateTo(
+                      "/employes/update/${employe.marcaEmpPk}");
                 },
                 icon: Container(
                   width: 50,
