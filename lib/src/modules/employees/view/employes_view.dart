@@ -70,6 +70,7 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
     // TODO: implement initState
     super.initState();
 
+    Provider.of<EmployesProvider>(context, listen: false).employes = [];
     Provider.of<EmployesProvider>(context, listen: false).getEmployes();
   }
 
@@ -85,35 +86,67 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
     return SizedBox(
       width: double.infinity,
       child: SingleChildScrollView(
-        child: PaginatedDataTable(
-          columns: [
-            DataColumn(label: Text('Código\nde empleado', style: style)),
-            DataColumn(label: Text('Nombres', style: style)),
-            DataColumn(label: Text('Apellidos', style: style)),
-            DataColumn(label: Text('Fecha de\nnacimiento', style: style)),
-            DataColumn(label: Text('Género', style: style)),
-            DataColumn(label: Text('Tipo de\ncontratación', style: style)),
-            DataColumn(label: Text('Sede\nasignada', style: style)),
-            DataColumn(label: Text('Acciones', style: style)),
-          ],
-          source: EmployesTDS(
-            provider.employes,
-            context,
-            provider.total,
+        child: (provider.employes.length > 0)
+            ? PaginatedDataTable(
+                columns: [
+                  DataColumn(label: Text('Código\nde empleado', style: style)),
+                  DataColumn(label: Text('Nombres', style: style)),
+                  DataColumn(label: Text('Apellidos', style: style)),
+                  DataColumn(label: Text('Fecha de\nnacimiento', style: style)),
+                  DataColumn(label: Text('Género', style: style)),
+                  DataColumn(
+                      label: Text('Tipo de\ncontratación', style: style)),
+                  DataColumn(label: Text('Sede\nasignada', style: style)),
+                  DataColumn(label: Text('Acciones', style: style)),
+                ],
+                source: EmployesTDS(
+                  provider.employes,
+                  context,
+                  provider.total,
+                ),
+                onPageChanged: (value) async {
+                  provider.quantity = value;
+                  await provider.getEmployes(true);
+                },
+                onRowsPerPageChanged: (value) async {
+                  provider.quantity = value ?? 10;
+                  await provider.getEmployes(true);
+                  setState(() {
+                    _rowsPerPage = value ?? 10;
+                  });
+                },
+                rowsPerPage: _rowsPerPage,
+                headingRowColor: MaterialStateProperty.all(headerRowTable),
+              )
+            : const NotDataWidget(),
+      ),
+    );
+  }
+}
+
+class NotDataWidget extends StatelessWidget {
+  const NotDataWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 400,
+      // padding: const EdgeInsets.only(top: 40),
+      child: Column(
+        children: [
+          Image.asset("assets/icons/no_employes.png"),
+          const SizedBox(height: 20),
+          Text(
+            "Sin datos",
+            style: TextStyle(
+              color: getTheme(context).tertiary,
+              fontWeight: FontWeight.w400,
+              fontSize: 26,
+            ),
           ),
-          onPageChanged: (value) async {
-            provider.quantity = value;
-            await provider.getEmployes(true);
-          },
-          onRowsPerPageChanged: (value) async {
-            provider.quantity = value ?? 10;
-            await provider.getEmployes(true);
-            setState(() {
-              _rowsPerPage = value ?? 10;
-            });
-          },
-          rowsPerPage: _rowsPerPage,
-        ),
+        ],
       ),
     );
   }
@@ -262,7 +295,7 @@ class ListComaniesWidget extends StatelessWidget {
             title: 'Lista de empleados por empresa',
             onChange: (val) {
               provider.company = val.id;
-              provider.getEmployes(true);
+              provider.getEmployes();
             },
             textSelected: 'Mostrar todos',
             items: [

@@ -21,6 +21,7 @@ const whiteColor = Color(0XFFFFFFFF);
 //Text <P> color
 const textGray = Color(0XFF454B54);
 const textGraySubtitle = Color(0XFF9A9FA0);
+const headerRowTable = Color(0XFFF3F3F4);
 
 ///
 const infoBackground = Color(0XFF3C4E65);

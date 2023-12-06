@@ -5,3 +5,5 @@ export 'package:marcacion_admin/src/modules/employees/model/contratation_model.d
 export 'package:marcacion_admin/src/modules/employees/model/employes_model.dart';
 export 'package:marcacion_admin/src/modules/employees/model/gender_model.dart';
 export 'package:marcacion_admin/src/modules/employees/model/sedes_model.dart';
+
+export 'package:marcacion_admin/src/modules/employees/model/employe_model.dart';

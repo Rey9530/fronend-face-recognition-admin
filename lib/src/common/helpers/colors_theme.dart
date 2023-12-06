@@ -10,6 +10,8 @@ ThemeData setTheme() {
     colorScheme: ColorScheme.fromSeed(
       seedColor: whiteColor,
       primary: primary,
+      tertiary: tertiary,
+      secondary: secondary,
     ).copyWith(),
     useMaterial3: true,
     fontFamily: museoSans,

@@ -48,7 +48,11 @@ class EmployesProvider extends ChangeNotifier {
         },
       );
       final response = EmployesResponse.fromJson(resp);
-      employes = [...employes, ...response.data.employes];
+      if (load) {
+        employes = [...employes, ...response.data.employes];
+      } else {
+        employes = response.data.employes;
+      }
       quantity = response.data.pagination.quantity;
       page = response.data.pagination.page;
       total = response.data.pagination.total;
@@ -67,22 +71,22 @@ class EmployesProvider extends ChangeNotifier {
   Future<bool> getEmploye() async {
     try {
       final resp = await DioConexion.get_('/employes/$uuid');
-      // final response = EmployesResponse.fromJson(resp).data[0];
-      // employeCode = response.empCodigo;
-      // employeName = TextEditingController(text: response.empNombres);
-      // employeSurname = TextEditingController(text: response.empApellidos);
-      // employeBirthdate =
-      //     TextEditingController(text: response.empFechaNacimiento);
-      // employeGender =
-      //     TextEditingController(text: response.marcaGenGenero.marcaGenPk);
-      // employeLocation =
-      //     TextEditingController(text: response.marcaUbiUbicacion.marcaUbiPk);
-      // employeCompany = TextEditingController(text: response.marcaEmpEmpreFk);
-      // // employeContact = TextEditingController(text: "");//TODO: PENDIENTE
-      // // employeHours = TextEditingController(text: "");//TODO: PENDIENTE
-      // employeContratation = TextEditingController(text: response.marcaEmpCnFk);
-      // employeDateStart = TextEditingController(text: ""); //TODO: PENDIENTE
-      // employeDateEnd = TextEditingController(text: ""); //TODO: PENDIENTE
+      final response = EmployeResponse.fromJson(resp).data;
+      employeCode = response.empCodigo;
+      employeName = TextEditingController(text: response.empNombres);
+      employeSurname = TextEditingController(text: response.empApellidos);
+      employeBirthdate =
+          TextEditingController(text: response.empFechaNacimiento);
+      employeGender =
+          TextEditingController(text: response.marcaGenGenero.marcaGenPk);
+      employeLocation =
+          TextEditingController(text: response.marcaUbiUbicacion.marcaUbiPk);
+      employeCompany = TextEditingController(text: response.marcaEmpEmpreFk);
+      // employeContact = TextEditingController(text: "");//TODO: PENDIENTE
+      // employeHours = TextEditingController(text: "");//TODO: PENDIENTE
+      employeContratation = TextEditingController(text: response.marcaEmpCnFk);
+      employeDateStart = TextEditingController(text: ""); //TODO: PENDIENTE
+      employeDateEnd = TextEditingController(text: ""); //TODO: PENDIENTE
       // employes = response;
       return true;
     } catch (e) {
