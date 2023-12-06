@@ -28,7 +28,6 @@ class EmployesTDS extends DataTableSource {
         DataCell(Text(employe.marcaGenGenero.genNombre)),
         DataCell(Text(employe.marcaCnContratacion.cnNombre)),
         DataCell(Text(employe.marcaUbiUbicacion.ubiNombre)),
-        // Text(employe.marcaEmprePk)
         DataCell(
           Row(
             children: [

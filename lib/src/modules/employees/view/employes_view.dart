@@ -13,21 +13,16 @@ class EmployesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => EmployesProvider()),
-      ],
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          physics: const ClampingScrollPhysics(),
-          children: const [
-            BreadCrumWidget(
-              title: 'Empleados',
-            ),
-            _BodyEmployes(),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: ListView(
+        physics: const ClampingScrollPhysics(),
+        children: const [
+          BreadCrumWidget(
+            title: 'Empleados',
+          ),
+          _BodyEmployes(),
+        ],
       ),
     );
   }
@@ -262,7 +257,7 @@ class _BtnNewEmployedWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          print("object");
+          NavigationService.navigateTo(Flurorouter.employeAddRoute);
         },
         child: const Text(
           "Nuevo empleado",

@@ -14,6 +14,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     this.onChange,
     this.onFieldSubmitted,
     this.isDark = false,
+    this.suffixIcon,
     this.floatingLabelBehavior = FloatingLabelBehavior.always,
   });
   final bool isDark;
@@ -26,6 +27,7 @@ class TextFormFieldCustomWidget extends StatefulWidget {
   final Color? cursorColor;
   final TextEditingController controller;
   final FloatingLabelBehavior? floatingLabelBehavior;
+  final Widget? suffixIcon;
   @override
   State<TextFormFieldCustomWidget> createState() =>
       _TextFormFieldCustomWidgetState();
@@ -116,7 +118,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
                                 .withOpacity(0.6),
                       ),
               )
-            : null,
+            : widget.suffixIcon,
         labelText: widget.label,
         hintText: widget.hinText,
         hintStyle: const TextStyle(color: Color(0XFFDFDFDF)),

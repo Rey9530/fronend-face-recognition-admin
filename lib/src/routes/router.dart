@@ -14,6 +14,7 @@ class Flurorouter {
   // Dashboard
   static String dashboardRoute = '/dashboard';
   static String employesRoute = '/employes';
+  static String employeAddRoute = '/employes/create';
   static String companiesRoute = '/companies';
   static String contractsRoute = '/contracts';
 
@@ -35,21 +36,27 @@ class Flurorouter {
     router.define(
       dashboardRoute,
       handler: DashboardHandlers.dashboard,
-      transitionType: TransitionType.fadeIn,
+      transitionType: TransitionType.none,
     );
 
-    // Dashboard
+    // Employes
     router.define(
       employesRoute,
       handler: EmployesHandlers.list,
-      transitionType: TransitionType.fadeIn,
+      transitionType: TransitionType.none,
+    );
+
+    router.define(
+      employeAddRoute,
+      handler: EmployesHandlers.addEmploye,
+      transitionType: TransitionType.none,
     );
 
     // Dashboard
     router.define(
       companiesRoute,
       handler: CompaniesHandlers.list,
-      transitionType: TransitionType.fadeIn,
+      transitionType: TransitionType.none,
     );
 
     // 404

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/common/layout/dashboard/dashboard_layout.dart';
 import 'package:marcacion_admin/src/common/layout/splash/splash_layout.dart';
@@ -34,6 +34,14 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Flurorouter.router.generator,
       navigatorKey: NavigationService.navigatorKey,
       scaffoldMessengerKey: NotificationsService.messengerKey,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es', 'SV'), // English, UK
+      ],
       builder: (_, child) {
         return Overlay(
           initialEntries: [

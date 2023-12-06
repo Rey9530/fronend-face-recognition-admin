@@ -7,37 +7,19 @@ class EmployesProvider extends ChangeNotifier {
   // final formKey = GlobalKey<FormState>();
 
   String? id;
-  // var companyName = TextEditingController(text: "");
-  // var companyAdress = TextEditingController(text: "");
-  // var companyContact = TextEditingController(text: "");
-  // var companyEmail = TextEditingController(text: "");
-  // var companyPhone = TextEditingController(text: "");
+  var employeName = TextEditingController(text: "");
+  var employeSurname = TextEditingController(text: "");
+  var employeBirthdate = TextEditingController(text: "");
+  var employeGender = TextEditingController(text: "");
+  var employeLocation = TextEditingController(text: "");
+  var employeCompany = TextEditingController(text: "");
+  var employeContact = TextEditingController(text: "");
+  var employeHours = TextEditingController(text: "");
+  var employeContratation = TextEditingController(text: "");
+  var employeDateStart = TextEditingController(text: "");
+  var employeDateEnd = TextEditingController(text: "");
   bool isReady = false;
   bool loading = false;
-
-  // validarInput() {
-  //   var ready = companyName.text.isNotEmpty &&
-  //       companyAdress.text.isNotEmpty &&
-  //       companyContact.text.isNotEmpty &&
-  //       companyEmail.text.isNotEmpty &&
-  //       companyPhone.text.isNotEmpty;
-
-  //   if (ready != isReady) {
-  //     isReady = ready;
-  //     notifyListeners();
-  //   }
-  //   return isReady;
-  // }
-
-  // edit(Companie companie) {
-  //   id = companie.marcaEmprePk;
-  //   companyName.text = companie.empreNombre;
-  //   companyAdress.text = companie.empreDireccion;
-  //   companyContact.text = companie.empreContactoNombre;
-  //   companyEmail.text = companie.empreContactoCorreo;
-  //   companyPhone.text = companie.empreContactoTelefono;
-  //   validarInput();
-  // }
 
   // limpiar() {
   //   id = null;

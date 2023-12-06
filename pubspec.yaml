@@ -33,7 +33,9 @@ dependencies:
   fluro: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_localization: ^0.1.14
   intl: ^0.18.1
+  localization: ^2.1.1
   provider: ^6.1.1
   shared_preferences: ^2.2.2
 

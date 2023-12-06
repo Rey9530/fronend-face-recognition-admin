@@ -23,7 +23,7 @@ class BtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      height: 50,
+      height: height,
       child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: disable ? primario : primary,

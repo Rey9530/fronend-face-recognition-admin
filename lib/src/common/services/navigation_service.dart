@@ -12,4 +12,10 @@ class NavigationService {
       return navigatorKey.currentState!.pushReplacementNamed(routeName);
     }
   }
+
+  static goBack() {
+    if (navigatorKey.currentState != null) {
+      return navigatorKey.currentState!.pop();
+    }
+  }
 }
