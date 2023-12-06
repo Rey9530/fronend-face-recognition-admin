@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/common/services/services.dart';
+import 'package:marcacion_admin/src/modules/auth/viewmodel/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class BreadCrumWidget extends StatelessWidget {
   const BreadCrumWidget({
@@ -34,6 +37,7 @@ class UserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final providerAuth = Provider.of<AuthProvider>(context, listen: false);
     return Container(
       width: 220,
       height: 55,
@@ -51,14 +55,14 @@ class UserWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Reynaldo",
+                LocalStorage.prefs.getString('nombres') ?? '',
                 style: TextStyle(
                   color: getTheme(context).primary,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "9505002",
+                LocalStorage.prefs.getString('codigo') ?? '',
                 style: TextStyle(
                   color: getTheme(context).primary,
                   fontWeight: FontWeight.w400,
@@ -67,7 +71,12 @@ class UserWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Image.asset("assets/icons/logout.png"),
+          InkWell(
+            onTap: () {
+              providerAuth.logout();
+            },
+            child: Image.asset("assets/icons/logout.png"),
+          ),
           const SizedBox(width: 10),
         ],
       ),

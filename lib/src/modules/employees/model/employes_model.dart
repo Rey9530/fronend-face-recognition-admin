@@ -1,9 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:intl/intl.dart';
 
 class EmployesResponse {
-  final List<Employe> data;
+  final RespData data;
   final int status;
   final String message;
 
@@ -15,15 +13,36 @@ class EmployesResponse {
 
   factory EmployesResponse.fromJson(Map<String, dynamic> json) =>
       EmployesResponse(
-        data: List<Employe>.from(json["data"].map((x) => Employe.fromJson(x))),
+        data: RespData.fromJson(json["data"]),
         status: json["status"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": data.toJson(),
         "status": status,
         "message": message,
+      };
+}
+
+class RespData {
+  final List<Employe> employes;
+  final Pagination pagination;
+
+  RespData({
+    required this.employes,
+    required this.pagination,
+  });
+
+  factory RespData.fromJson(Map<String, dynamic> json) => RespData(
+        employes: List<Employe>.from(
+            json["employes"].map((x) => Employe.fromJson(x))),
+        pagination: Pagination.fromJson(json["pagination"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "employes": List<dynamic>.from(employes.map((x) => x.toJson())),
+        "pagination": pagination.toJson(),
       };
 }
 
@@ -43,9 +62,9 @@ class Employe {
   final String marcaEmpUbiFk;
   final String marcaEmpCnFk;
   final MarcaGenGenero marcaGenGenero;
-  final List<_MarcaAsigAsignacion> marcaAsigAsignacion;
-  final _MarcaCnContratacion marcaCnContratacion;
-  final _MarcaUbiUbicacion marcaUbiUbicacion;
+  final List<dynamic> marcaAsigAsignacion;
+  final MarcaCnContratacion marcaCnContratacion;
+  final MarcaUbiUbicacion marcaUbiUbicacion;
 
   Employe({
     required this.marcaEmpPk,
@@ -85,13 +104,12 @@ class Employe {
         marcaEmpUbiFk: json["marca_emp_ubi_fk"],
         marcaEmpCnFk: json["marca_emp_cn_fk"],
         marcaGenGenero: MarcaGenGenero.fromJson(json["marca_gen_genero"]),
-        marcaAsigAsignacion: List<_MarcaAsigAsignacion>.from(
-            json["marca_asig_asignacion"]
-                .map((x) => _MarcaAsigAsignacion.fromJson(x))),
+        marcaAsigAsignacion:
+            List<dynamic>.from(json["marca_asig_asignacion"].map((x) => x)),
         marcaCnContratacion:
-            _MarcaCnContratacion.fromJson(json["marca_cn_contratacion"]),
+            MarcaCnContratacion.fromJson(json["marca_cn_contratacion"]),
         marcaUbiUbicacion:
-            _MarcaUbiUbicacion.fromJson(json["marca_ubi_ubicacion"]),
+            MarcaUbiUbicacion.fromJson(json["marca_ubi_ubicacion"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -111,66 +129,13 @@ class Employe {
         "marca_emp_cn_fk": marcaEmpCnFk,
         "marca_gen_genero": marcaGenGenero.toJson(),
         "marca_asig_asignacion":
-            List<dynamic>.from(marcaAsigAsignacion.map((x) => x.toJson())),
+            List<dynamic>.from(marcaAsigAsignacion.map((x) => x)),
         "marca_cn_contratacion": marcaCnContratacion.toJson(),
         "marca_ubi_ubicacion": marcaUbiUbicacion.toJson(),
       };
 }
 
-class _MarcaAsigAsignacion {
-  final String marcaAsigPk;
-  final DateTime asigHoraInicio;
-  final DateTime asigHoraFin;
-  final String proyEstado;
-  final DateTime asigFeccrea;
-  final DateTime asigFecmod;
-  final String asigUsrcrea;
-  final String asigUsrmod;
-  final String marcaAsigProyFk;
-  final String marcaAsigEmpFk;
-
-  _MarcaAsigAsignacion({
-    required this.marcaAsigPk,
-    required this.asigHoraInicio,
-    required this.asigHoraFin,
-    required this.proyEstado,
-    required this.asigFeccrea,
-    required this.asigFecmod,
-    required this.asigUsrcrea,
-    required this.asigUsrmod,
-    required this.marcaAsigProyFk,
-    required this.marcaAsigEmpFk,
-  });
-
-  factory _MarcaAsigAsignacion.fromJson(Map<String, dynamic> json) =>
-      _MarcaAsigAsignacion(
-        marcaAsigPk: json["marca_asig_pk"],
-        asigHoraInicio: DateTime.parse(json["asig_hora_inicio"]),
-        asigHoraFin: DateTime.parse(json["asig_hora_fin"]),
-        proyEstado: json["proy_estado"],
-        asigFeccrea: DateTime.parse(json["asig_feccrea"]),
-        asigFecmod: DateTime.parse(json["asig_fecmod"]),
-        asigUsrcrea: json["asig_usrcrea"],
-        asigUsrmod: json["asig_usrmod"],
-        marcaAsigProyFk: json["marca_asig_proy_fk"],
-        marcaAsigEmpFk: json["marca_asig_emp_fk"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "marca_asig_pk": marcaAsigPk,
-        "asig_hora_inicio": asigHoraInicio.toIso8601String(),
-        "asig_hora_fin": asigHoraFin.toIso8601String(),
-        "proy_estado": proyEstado,
-        "asig_feccrea": asigFeccrea.toIso8601String(),
-        "asig_fecmod": asigFecmod.toIso8601String(),
-        "asig_usrcrea": asigUsrcrea,
-        "asig_usrmod": asigUsrmod,
-        "marca_asig_proy_fk": marcaAsigProyFk,
-        "marca_asig_emp_fk": marcaAsigEmpFk,
-      };
-}
-
-class _MarcaCnContratacion {
+class MarcaCnContratacion {
   final String marcaCnPk;
   final String cnNombre;
   final String cnEstado;
@@ -179,7 +144,7 @@ class _MarcaCnContratacion {
   final String cnUsrcrea;
   final String cnUsrmod;
 
-  _MarcaCnContratacion({
+  MarcaCnContratacion({
     required this.marcaCnPk,
     required this.cnNombre,
     required this.cnEstado,
@@ -189,8 +154,8 @@ class _MarcaCnContratacion {
     required this.cnUsrmod,
   });
 
-  factory _MarcaCnContratacion.fromJson(Map<String, dynamic> json) =>
-      _MarcaCnContratacion(
+  factory MarcaCnContratacion.fromJson(Map<String, dynamic> json) =>
+      MarcaCnContratacion(
         marcaCnPk: json["marca_cn_pk"],
         cnNombre: json["cn_nombre"],
         cnEstado: json["cn_estado"],
@@ -251,7 +216,7 @@ class MarcaGenGenero {
       };
 }
 
-class _MarcaUbiUbicacion {
+class MarcaUbiUbicacion {
   final String marcaUbiPk;
   final String ubiNombre;
   final String ubiEstado;
@@ -260,7 +225,7 @@ class _MarcaUbiUbicacion {
   final String ubiUsrcrea;
   final String ubiUsrmod;
 
-  _MarcaUbiUbicacion({
+  MarcaUbiUbicacion({
     required this.marcaUbiPk,
     required this.ubiNombre,
     required this.ubiEstado,
@@ -270,8 +235,8 @@ class _MarcaUbiUbicacion {
     required this.ubiUsrmod,
   });
 
-  factory _MarcaUbiUbicacion.fromJson(Map<String, dynamic> json) =>
-      _MarcaUbiUbicacion(
+  factory MarcaUbiUbicacion.fromJson(Map<String, dynamic> json) =>
+      MarcaUbiUbicacion(
         marcaUbiPk: json["marca_ubi_pk"],
         ubiNombre: json["ubi_nombre"],
         ubiEstado: json["ubi_estado"],
@@ -289,5 +254,29 @@ class _MarcaUbiUbicacion {
         "ubi_fecmod": ubiFecmod.toIso8601String(),
         "ubi_usrcrea": ubiUsrcrea,
         "ubi_usrmod": ubiUsrmod,
+      };
+}
+
+class Pagination {
+  final int page;
+  final int quantity;
+  final int total;
+
+  Pagination({
+    required this.page,
+    required this.quantity,
+    required this.total,
+  });
+
+  factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
+        page: json["page"],
+        quantity: json["quantity"],
+        total: json["total"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "page": page,
+        "quantity": quantity,
+        "total": total,
       };
 }

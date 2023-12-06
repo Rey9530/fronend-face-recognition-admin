@@ -8,6 +8,7 @@ class SelectCompaniesWidget extends StatefulWidget {
     required this.controller,
     required this.title,
     required this.items,
+    this.textSelected = 'Selecciona una opción',
     this.selected,
     this.onChange,
     this.isRequired = true,
@@ -16,6 +17,7 @@ class SelectCompaniesWidget extends StatefulWidget {
   final List<DropdownButtonData>? items;
   final DropdownButtonData? selected;
   final String title;
+  final String textSelected;
   final bool isRequired;
   final bool isDisable;
   final TextEditingController controller;
@@ -30,9 +32,7 @@ class SelectCompaniesWidgetState extends State<SelectCompaniesWidget> {
   String dropdownvalue = '0';
 
   // List of items in our dropdown menu
-  List<DropdownButtonData> items = [
-    // DropdownButtonData(title: 'Selecciona una opción', id: '0'),
-  ];
+  List<DropdownButtonData> items = [];
   @override
   void initState() {
     super.initState();
@@ -47,7 +47,7 @@ class SelectCompaniesWidgetState extends State<SelectCompaniesWidget> {
     }
     items = [
       ...[
-        DropdownButtonData(title: 'Selecciona una opción', id: '0'),
+        DropdownButtonData(title: widget.textSelected, id: '0'),
       ],
       if (widget.items != null && widget.items!.isNotEmpty) ...widget.items!
     ];

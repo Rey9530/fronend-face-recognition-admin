@@ -27,16 +27,39 @@ class EmployesProvider extends ChangeNotifier {
   List<Contratation> contratations = [];
   List<Gender> genders = [];
 
-  Future<bool> getEmployes() async {
+  int page = 1;
+  int quantity = 10;
+  int total = 0;
+  String query = "";
+  String company = "";
+  Future<bool> getEmployes([load = false]) async {
     try {
-      final resp = await DioConexion.get_('/employes');
+      if (load) {
+        loading = true;
+        notifyListeners();
+      }
+      final resp = await DioConexion.get_(
+        '/employes',
+        {
+          "page": page,
+          "quantity": quantity,
+          "query": query,
+          "company": company,
+        },
+      );
       final response = EmployesResponse.fromJson(resp);
-      employes = response.data;
+      employes = [...employes, ...response.data.employes];
+      quantity = response.data.pagination.quantity;
+      page = response.data.pagination.page;
+      total = response.data.pagination.total;
       return true;
     } catch (e) {
       print(e);
       return false;
     } finally {
+      if (load) {
+        loading = false;
+      }
       notifyListeners();
     }
   }
@@ -44,22 +67,22 @@ class EmployesProvider extends ChangeNotifier {
   Future<bool> getEmploye() async {
     try {
       final resp = await DioConexion.get_('/employes/$uuid');
-      final response = EmployesResponse.fromJson(resp).data[0];
-      employeCode = response.empCodigo;
-      employeName = TextEditingController(text: response.empNombres);
-      employeSurname = TextEditingController(text: response.empApellidos);
-      employeBirthdate =
-          TextEditingController(text: response.empFechaNacimiento);
-      employeGender =
-          TextEditingController(text: response.marcaGenGenero.marcaGenPk);
-      employeLocation =
-          TextEditingController(text: response.marcaUbiUbicacion.marcaUbiPk);
-      employeCompany = TextEditingController(text: response.marcaEmpEmpreFk);
-      // employeContact = TextEditingController(text: "");//TODO: PENDIENTE
-      // employeHours = TextEditingController(text: "");//TODO: PENDIENTE
-      employeContratation = TextEditingController(text: response.marcaEmpCnFk);
-      employeDateStart = TextEditingController(text: ""); //TODO: PENDIENTE
-      employeDateEnd = TextEditingController(text: ""); //TODO: PENDIENTE
+      // final response = EmployesResponse.fromJson(resp).data[0];
+      // employeCode = response.empCodigo;
+      // employeName = TextEditingController(text: response.empNombres);
+      // employeSurname = TextEditingController(text: response.empApellidos);
+      // employeBirthdate =
+      //     TextEditingController(text: response.empFechaNacimiento);
+      // employeGender =
+      //     TextEditingController(text: response.marcaGenGenero.marcaGenPk);
+      // employeLocation =
+      //     TextEditingController(text: response.marcaUbiUbicacion.marcaUbiPk);
+      // employeCompany = TextEditingController(text: response.marcaEmpEmpreFk);
+      // // employeContact = TextEditingController(text: "");//TODO: PENDIENTE
+      // // employeHours = TextEditingController(text: "");//TODO: PENDIENTE
+      // employeContratation = TextEditingController(text: response.marcaEmpCnFk);
+      // employeDateStart = TextEditingController(text: ""); //TODO: PENDIENTE
+      // employeDateEnd = TextEditingController(text: ""); //TODO: PENDIENTE
       // employes = response;
       return true;
     } catch (e) {
@@ -143,6 +166,15 @@ class EmployesProvider extends ChangeNotifier {
     } finally {
       loading = false;
       // notifyListeners();
+    }
+  }
+
+  Future<List<Companie>> getCompanies() async {
+    try {
+      var resp = await DioConexion.get_('/companies');
+      return CompaniesResponse.fromJson(resp).data;
+    } catch (e) {
+      return [];
     }
   }
 

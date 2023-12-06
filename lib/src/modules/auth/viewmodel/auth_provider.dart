@@ -25,6 +25,9 @@ class AuthProvider extends ChangeNotifier {
       user = authResponse.data;
       authStatus = AuthStatus.authenticated;
       LocalStorage.prefs.setString('token', user!.token);
+      LocalStorage.prefs.setString('nombres', user!.usrNombres);
+      LocalStorage.prefs.setString('apellidos', user!.usrApellidos);
+      LocalStorage.prefs.setString('codigo', user!.usrCodigo);
       DioConexion.configureDio();
       NavigationService.replaceTo(Flurorouter.dashboardRoute);
 
@@ -60,5 +63,15 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return false;
     }
+  }
+
+  logout() {
+    LocalStorage.prefs.remove('token');
+    LocalStorage.prefs.remove('nombres');
+    LocalStorage.prefs.remove('apellidos');
+    LocalStorage.prefs.remove('codigo');
+    authStatus = AuthStatus.notAuthenticated;
+    notifyListeners();
+    NavigationService.replaceTo(Flurorouter.loginRoute);
   }
 }

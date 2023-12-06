@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/common/models/dropdown_buttom_data_model.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
 import 'package:marcacion_admin/src/modules/employees/model/employes_dts.dart';
+import 'package:marcacion_admin/src/modules/employees/model/models.dart';
 import 'package:marcacion_admin/src/modules/employees/viewmodel/employes_provider.dart';
 import 'package:marcacion_admin/src/routes/router.dart';
 import 'package:provider/provider.dart';
@@ -69,9 +73,11 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
     Provider.of<EmployesProvider>(context, listen: false).getEmployes();
   }
 
+  int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
+
   @override
   Widget build(BuildContext context) {
-    var employes = Provider.of<EmployesProvider>(context).employes;
+    var provider = Provider.of<EmployesProvider>(context);
     var style = TextStyle(
       fontWeight: FontWeight.w600,
       color: getTheme(context).primary,
@@ -90,7 +96,23 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
             DataColumn(label: Text('Sede\nasignada', style: style)),
             DataColumn(label: Text('Acciones', style: style)),
           ],
-          source: EmployesTDS(employes, context),
+          source: EmployesTDS(
+            provider.employes,
+            context,
+            provider.total,
+          ),
+          onPageChanged: (value) async {
+            provider.quantity = value;
+            await provider.getEmployes(true);
+          },
+          onRowsPerPageChanged: (value) async {
+            provider.quantity = value ?? 10;
+            await provider.getEmployes(true);
+            setState(() {
+              _rowsPerPage = value ?? 10;
+            });
+          },
+          rowsPerPage: _rowsPerPage,
         ),
       ),
     );
@@ -102,49 +124,15 @@ class _FilterEmployesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         Row(
           children: [
-            SizedBox(
-              width: 500,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: getTheme(context).tertiary.withOpacity(0.5),
-                  ),
-                  labelText: " Búsqueda de empleado",
-                  labelStyle: TextStyle(
-                    color: getTheme(context).tertiary.withOpacity(0.5),
-                    fontWeight: FontWeight.w400,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: getTheme(context).tertiary.withOpacity(0.1),
-                    ),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: getTheme(context).tertiary.withOpacity(0.5),
-                    ),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: getTheme(context).tertiary.withOpacity(0.5),
-                    ),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-              ),
-            ),
-            const Spacer(),
-            const SizedBox(
-              width: 500,
-              child: SelectCompaniesWidget(),
-            ),
+            _SearchTextfieldWidget(),
+            Spacer(),
+            _LoadingWidget(),
+            Spacer(),
+            ListComaniesWidget(),
           ],
         ),
       ],
@@ -152,90 +140,141 @@ class _FilterEmployesWidget extends StatelessWidget {
   }
 }
 
-class SelectCompaniesWidget extends StatefulWidget {
-  const SelectCompaniesWidget({
-    super.key,
-  });
+class _SearchTextfieldWidget extends StatefulWidget {
+  const _SearchTextfieldWidget();
 
   @override
-  State<SelectCompaniesWidget> createState() => _SelectCompaniesWidgetState();
+  State<_SearchTextfieldWidget> createState() => _SearchTextfieldWidgetState();
 }
 
-class _SelectCompaniesWidgetState extends State<SelectCompaniesWidget> {
-  // Initial Selected Value
-  String dropdownvalue = 'Selecciona una opción';
+class _SearchTextfieldWidgetState extends State<_SearchTextfieldWidget> {
+  Timer? _debounce;
+  bool loading = false;
+  _onSearchChanged(String query) {
+    setState(() {
+      loading = true;
+    });
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      // do something with query
+      var provider = Provider.of<EmployesProvider>(context, listen: false);
+      provider.query = query;
+      await provider.getEmployes();
+      setState(() {
+        loading = false;
+      });
+    });
+  }
 
-  // List of items in our dropdown menu
-  var items = [
-    'Selecciona una opción',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //     width: 1,
-      //     color: getTheme(context).tertiary.withOpacity(0.5),
-      //   ),
-      //   borderRadius: BorderRadius.circular(4),
-      // ),
-      child: DropdownButtonFormField(
-        // Initial Value
-        value: dropdownvalue,
-        // underline: const SizedBox(),
-        isExpanded: true,
-        // Down Arrow Icon
-        icon: const Icon(Icons.keyboard_arrow_down),
-        borderRadius: BorderRadius.circular(4),
+    // var provider = Provider.of<EmployesProvider>(context, listen: false);
+    return SizedBox(
+      width: 500,
+      child: TextFormField(
         decoration: InputDecoration(
-          labelText: "Lista de empleados por empresa",
+          suffixIcon: loading
+              ? Container(
+                  padding: const EdgeInsets.only(right: 20),
+                  // width: 20,
+                  height: 20,
+                  child: const CircularProgressIndicator(),
+                )
+              : const SizedBox.shrink(),
+          prefixIcon: Icon(
+            Icons.search,
+            color: getTheme(context).primary,
+          ),
+          labelText: " Búsqueda de empleado",
+          // suffixIcon:
           labelStyle: TextStyle(
-            color: getTheme(context).tertiary.withOpacity(0.5),
+            color: getTheme(context).primary,
             fontWeight: FontWeight.w400,
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: getTheme(context).tertiary.withOpacity(0.1),
+              color: getTheme(context).primary,
             ),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(100),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: getTheme(context).tertiary.withOpacity(0.5),
+              color: getTheme(context).primary,
             ),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(100),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: getTheme(context).tertiary.withOpacity(0.5),
+              color: getTheme(context).primary,
             ),
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(100),
           ),
         ),
-        // Array list of items
-        items: items.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: Text(
-              items,
-              style: TextStyle(
-                color: getTheme(context).tertiary.withOpacity(0.5),
+        onChanged: _onSearchChanged,
+      ),
+    );
+  }
+}
+
+class _LoadingWidget extends StatelessWidget {
+  const _LoadingWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<EmployesProvider>(context);
+    return (provider.loading)
+        ? const CircularProgressIndicator()
+        : const SizedBox.shrink();
+  }
+}
+
+class ListComaniesWidget extends StatelessWidget {
+  const ListComaniesWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<EmployesProvider>(context, listen: false);
+    return SizedBox(
+      width: 500,
+      child: FutureBuilder(
+        future: provider.getCompanies(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Companie>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox(
+              width: 50,
+              height: 50,
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
+            );
+          }
+          return SelectCompaniesWidget(
+            controller: TextEditingController(),
+            title: 'Lista de empleados por empresa',
+            onChange: (val) {
+              provider.company = val.id;
+              provider.getEmployes(true);
+            },
+            textSelected: 'Mostrar todos',
+            items: [
+              if (snapshot.data != null)
+                ...snapshot.data!.map(
+                  (e) => DropdownButtonData(
+                    id: e.marcaEmprePk,
+                    title: e.empreNombre,
+                  ),
+                )
+            ],
           );
-        }).toList(),
-        // After selecting the desired option,it will
-        // change button value to selected value
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownvalue = newValue!;
-          });
         },
       ),
     );

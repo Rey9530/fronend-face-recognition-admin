@@ -16,9 +16,14 @@ class DioConexion {
     };
   }
 
-  static Future get_(String endpoint) async {
+  static Future get_(String endpoint,
+      [Map<String, dynamic>? queryParameters]) async {
     Response response;
-    response = await _dio.get(endpoint);
+    response = await _dio.get(
+      endpoint,
+      queryParameters: queryParameters,
+    );
+    // await Future.delayed(const Duration(seconds: 2));
     return response.data;
   }
 

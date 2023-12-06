@@ -11,8 +11,9 @@ import 'package:provider/provider.dart';
 class EmployesTDS extends DataTableSource {
   final List<Employe> companies;
   final BuildContext context;
+  final int total;
 
-  EmployesTDS(this.companies, this.context);
+  EmployesTDS(this.companies, this.context, this.total);
 
   @override
   DataRow? getRow(int index) {
@@ -113,7 +114,7 @@ class EmployesTDS extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => companies.length;
+  int get rowCount => total;
 
   @override
   int get selectedRowCount => 0;
