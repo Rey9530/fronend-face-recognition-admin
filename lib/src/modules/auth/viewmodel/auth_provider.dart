@@ -7,7 +7,6 @@ import 'package:marcacion_admin/src/routes/router.dart';
 enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthProvider extends ChangeNotifier {
-  // final _dio = DioConexion();
   AuthStatus authStatus = AuthStatus.checking;
   AuthProvider() {
     isAuthenticated();

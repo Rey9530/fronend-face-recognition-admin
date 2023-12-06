@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
-import 'package:marcacion_admin/src/modules/companies/model/companies_model.dart';
-import 'package:marcacion_admin/src/modules/employees/model/code_employe_model.dart';
-import 'package:marcacion_admin/src/modules/employees/model/contratation_model.dart';
-import 'package:marcacion_admin/src/modules/employees/model/employes_model.dart';
-import 'package:marcacion_admin/src/modules/employees/model/gender_model.dart';
-import 'package:marcacion_admin/src/modules/employees/model/sedes_model.dart';
+import 'package:marcacion_admin/src/modules/employees/model/models.dart';
 
 class EmployesProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -27,6 +22,11 @@ class EmployesProvider extends ChangeNotifier {
   bool loading = false;
 
   List<Employe> employes = [];
+  List<Sede> sedes = [];
+  List<Companie> companies = [];
+  List<Contratation> contratations = [];
+  List<Gender> genders = [];
+
   Future<bool> getEmployes() async {
     try {
       final resp = await DioConexion.get_('/employes');
@@ -105,7 +105,7 @@ class EmployesProvider extends ChangeNotifier {
   }
 
   String employeCode = '000000';
-  Future generateCode(birthDate) async {
+  Future generateCode(String birthDate) async {
     try {
       if (loading) return;
       loading = true;
@@ -125,71 +125,20 @@ class EmployesProvider extends ChangeNotifier {
     }
   }
 
-  List<Sede> sedes = [];
-  Future getSedes() async {
+  Future getCatalogs() async {
     try {
       if (loading) return;
       loading = true;
       // notifyListeners();
-      var resp = await DioConexion.get_('/employes/get/sedes');
-      var code = SedesResp.fromJson(resp);
-      sedes = code.data;
+      var resp = await DioConexion.get_('/employes/get/catalogs');
+      var code = CatalogResponse.fromJson(resp);
+      companies = code.data.companies;
+      genders = code.data.gender;
+      sedes = code.data.sedes;
+      contratations = code.data.contratation;
       return true;
     } catch (e) {
-      return false;
-    } finally {
-      loading = false;
-      // notifyListeners();
-    }
-  }
-
-  List<Companie> companies = [];
-  Future getCompanies() async {
-    try {
-      if (loading) return;
-      loading = true;
-      // notifyListeners();
-      var resp = await DioConexion.get_('/companies');
-      var code = CompaniesResponse.fromJson(resp);
-      companies = code.data;
-      return true;
-    } catch (e) {
-      return false;
-    } finally {
-      loading = false;
-      // notifyListeners();
-    }
-  }
-
-  List<Contratation> contratations = [];
-  Future getContratation() async {
-    try {
-      if (loading) return;
-      loading = true;
-      // notifyListeners();
-      var resp = await DioConexion.get_('/employes/get/contratation');
-      var code = ContratationResp.fromJson(resp);
-      contratations = code.data;
-      return true;
-    } catch (e) {
-      return false;
-    } finally {
-      loading = false;
-      // notifyListeners();
-    }
-  }
-
-  List<Gender> genders = [];
-  Future getGenders() async {
-    try {
-      if (loading) return;
-      loading = true;
-      // notifyListeners();
-      var resp = await DioConexion.get_('/employes/get/gender');
-      var code = GenderResp.fromJson(resp);
-      genders = code.data;
-      return true;
-    } catch (e) {
+      print(e.toString());
       return false;
     } finally {
       loading = false;
@@ -199,10 +148,11 @@ class EmployesProvider extends ChangeNotifier {
 
   Future getCatalogos(String? uui) async {
     uuid = uui;
-    await getSedes();
-    await getCompanies();
-    await getContratation();
-    await getGenders();
+    await getCatalogs();
+    // await getSedes();
+    // await getCompanies();
+    // await getContratation();
+    // await getGenders();
     if (uuid != null) {
       await getEmploye();
     } else {

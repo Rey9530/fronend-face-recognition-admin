@@ -54,18 +54,22 @@ class Companie {
   });
 
   factory Companie.fromJson(Map<String, dynamic> json) => Companie(
-        marcaEmprePk: json["marca_empre_pk"],
-        empreNombre: json["empre_nombre"],
-        empreDireccion: json["empre_direccion"],
-        empreContactoNombre: json["empre_contacto_nombre"],
-        empreContactoCorreo: json["empre_contacto_correo"],
-        empreContactoTelefono: json["empre_contacto_telefono"],
-        empreUsrcrea: json["empre_usrcrea"],
-        empreUsrmod: json["empre_usrmod"],
-        empreFeccrea: DateTime.parse(json["empre_feccrea"]),
-        empreFecmod: DateTime.parse(json["empre_fecmod"]),
-        empreEstado: json["empre_estado"],
-        marcaEmpreUsrFk: json["marca_empre_usr_fk"],
+        marcaEmprePk: json["marca_empre_pk"] ?? '',
+        empreNombre: json["empre_nombre"] ?? '',
+        empreDireccion: json["empre_direccion"] ?? '',
+        empreContactoNombre: json["empre_contacto_nombre"] ?? '',
+        empreContactoCorreo: json["empre_contacto_correo"] ?? '',
+        empreContactoTelefono: json["empre_contacto_telefono"] ?? '',
+        empreUsrcrea: json["empre_usrcrea"] ?? '',
+        empreUsrmod: json["empre_usrmod"] ?? '',
+        empreEstado: json["empre_estado"] ?? '',
+        marcaEmpreUsrFk: json["marca_empre_usr_fk"] ?? '',
+        empreFeccrea: json["empre_feccrea"] != null
+            ? DateTime.parse(json["empre_feccrea"])
+            : DateTime.now(),
+        empreFecmod: json["empre_fecmod"] != null
+            ? DateTime.parse(json["empre_fecmod"])
+            : DateTime.now(),
       );
 
   Map<String, dynamic> toJson() => {
