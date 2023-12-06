@@ -9,8 +9,10 @@ class BreadCrumWidget extends StatelessWidget {
   const BreadCrumWidget({
     super.key,
     required this.title,
+    this.showLogout = true,
   });
   final String title;
+  final bool showLogout;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -24,7 +26,7 @@ class BreadCrumWidget extends StatelessWidget {
             color: getTheme(context).primary,
           ),
         ),
-        const UserWidget(),
+        showLogout ? const UserWidget() : const SizedBox(),
       ],
     );
   }
@@ -55,14 +57,14 @@ class UserWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                LocalStorage.prefs.getString('nombres') ?? '',
+                LocalStorage.prefs.getString('nombres') ?? "",
                 style: TextStyle(
                   color: getTheme(context).primary,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                LocalStorage.prefs.getString('codigo') ?? '',
+                LocalStorage.prefs.getString('codigo') ?? "",
                 style: TextStyle(
                   color: getTheme(context).primary,
                   fontWeight: FontWeight.w400,
@@ -78,6 +80,80 @@ class UserWidget extends StatelessWidget {
             child: Image.asset("assets/icons/logout.png"),
           ),
           const SizedBox(width: 10),
+        ],
+      ),
+    );
+  }
+}
+
+class BigUserWidget extends StatelessWidget {
+  const BigUserWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final providerAuth = Provider.of<AuthProvider>(context, listen: false);
+
+    return Container(
+      width: 600,
+      height: 135,
+      decoration: BoxDecoration(
+        color: userWidgetBackground,
+        borderRadius: BorderRadius.circular(20000),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 10),
+          Image.asset(
+            "assets/icons/user_big.png",
+          ),
+          const SizedBox(width: 20),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                LocalStorage.prefs.getString('nombres') ?? '',
+                style: TextStyle(
+                  color: getTheme(context).primary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 40,
+                ),
+              ),
+              Text(
+                LocalStorage.prefs.getString('codigo') ?? "",
+                style: TextStyle(
+                  color: getTheme(context).primary,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 36,
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              providerAuth.logout();
+            },
+            child: Image.asset("assets/icons/logout_big.png"),
+          ),
+          const SizedBox(width: 10),
+          InkWell(
+            onTap: () {
+              providerAuth.logout();
+            },
+            child: Text(
+              "Cerrar\nsesión",
+              style: TextStyle(
+                color: getTheme(context).primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                height: 0.8,
+              ),
+            ),
+          ),
+          const SizedBox(width: 20),
         ],
       ),
     );

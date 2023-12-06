@@ -3,6 +3,7 @@ import 'package:marcacion_admin/src/routes/admin_handlers.dart';
 import 'package:marcacion_admin/src/routes/companies_handlers.dart';
 import 'package:marcacion_admin/src/routes/dashboard_handlers.dart';
 import 'package:marcacion_admin/src/routes/employes_handlers.dart';
+import 'package:marcacion_admin/src/routes/user_handlers.dart';
 
 class Flurorouter {
   static final FluroRouter router = FluroRouter();
@@ -17,6 +18,7 @@ class Flurorouter {
   static String employeAddRoute = '/employes/create';
   static String employeEditRoute = '/employes/update/:uuid';
   static String companiesRoute = '/companies';
+  static String userProfileRoute = '/profile';
   static String contractsRoute = '/contracts';
 
   static void configureRoutes() {
@@ -62,6 +64,13 @@ class Flurorouter {
     router.define(
       companiesRoute,
       handler: CompaniesHandlers.list,
+      transitionType: TransitionType.none,
+    );
+
+    // Dashboard
+    router.define(
+      userProfileRoute,
+      handler: UserHandlers.view,
       transitionType: TransitionType.none,
     );
 

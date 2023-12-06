@@ -101,14 +101,11 @@ class _SideBarMenuWidgetState extends State<_SideBarMenuWidget> {
           },
         ),
         ItemsMenuWidget(
-          active: menu == 'users',
+          active: sideMenuProvider.currentPage == Flurorouter.userProfileRoute,
           title: 'Usuario',
           iconName: 'users',
-          onPress: () {
-            setState(() {
-              menu = 'users';
-            });
-          },
+          onPress: () =>
+              NavigationService.replaceTo(Flurorouter.userProfileRoute),
         ),
         const Spacer(),
         const VersionWidget(),
