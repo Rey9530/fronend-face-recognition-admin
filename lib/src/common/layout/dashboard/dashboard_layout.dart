@@ -91,14 +91,10 @@ class _SideBarMenuWidgetState extends State<_SideBarMenuWidget> {
           },
         ),
         ItemsMenuWidget(
-          active: menu == 'report',
+          active: sideMenuProvider.currentPage == Flurorouter.reportsRoute,
           title: 'Reportes',
           iconName: 'report',
-          onPress: () {
-            setState(() {
-              menu = 'report';
-            });
-          },
+          onPress: () => NavigationService.replaceTo(Flurorouter.reportsRoute),
         ),
         ItemsMenuWidget(
           active: sideMenuProvider.currentPage == Flurorouter.userProfileRoute,

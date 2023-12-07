@@ -26,7 +26,7 @@ class BtnWidget extends StatelessWidget {
       height: height,
       child: TextButton(
         style: TextButton.styleFrom(
-          backgroundColor: disable ? primario : primary,
+          backgroundColor: disable ? disableButom : primary,
           padding: const EdgeInsets.symmetric(horizontal: 20),
         ),
         onPressed: () {
@@ -41,7 +41,7 @@ class BtnWidget extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  color: disable ? primarioText : Colors.white,
+                  color: disable ? primario.withOpacity(0.9) : Colors.white,
                   fontWeight: FontWeight.w600,
                 ),
               ),

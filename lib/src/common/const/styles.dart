@@ -14,6 +14,7 @@ const success = Color(0XFF55C157);
 
 const primario = Color(0XFF778393);
 const primarioText = Color(0XFFADB5BE);
+const disableButom = Color(0XFFEFF0F2);
 
 const activeBtn = Color(0XFFD1D2D3);
 const whiteColor = Color(0XFFFFFFFF);
