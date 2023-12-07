@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/modules/auth/model/models_auth.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 
@@ -53,6 +54,8 @@ class UserProvider extends ChangeNotifier {
         password = TextEditingController();
         passwordNew = TextEditingController();
         passwordRepeat = TextEditingController();
+        NotificationsService.showSnackbarSuccess('Contraseña actualizada');
+        NavigationService.goBack();
         return true;
       } else {
         return false;

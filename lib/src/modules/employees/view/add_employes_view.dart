@@ -170,7 +170,7 @@ class _FormewEmployeWidget extends StatelessWidget {
                         );
                         await provider.generateCode(birthDate);
                       } catch (e) {
-                        print(e.toString());
+                        return;
                       }
                       // provider.validarInput();
                     },
@@ -257,9 +257,6 @@ class _FormewEmployeWidget extends StatelessWidget {
                     isRequired: false,
                     isDisable: true,
                     title: 'Código de contrato',
-                    onChange: (val) {
-                      print(val);
-                    },
                     items: [
                       DropdownButtonData(id: '1', title: '1'),
                       DropdownButtonData(id: '2', title: '2'),
@@ -276,9 +273,6 @@ class _FormewEmployeWidget extends StatelessWidget {
                     isDisable: true,
                     controller: provider.employeHours,
                     title: 'Horario',
-                    onChange: (val) {
-                      print(val);
-                    },
                     items: [
                       DropdownButtonData(id: '1', title: '1'),
                       DropdownButtonData(id: '2', title: '2'),
@@ -293,9 +287,6 @@ class _FormewEmployeWidget extends StatelessWidget {
                   child: SelectCompaniesWidget(
                     controller: provider.employeContratation,
                     title: 'Tipo de contratación',
-                    onChange: (val) {
-                      print(val);
-                    },
                     selected: DropdownButtonData(
                       id: provider.employeContratation.text,
                       title: provider.employeContratation.text,

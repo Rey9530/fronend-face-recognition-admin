@@ -67,7 +67,6 @@ class _ListEmployestWidget extends StatefulWidget {
 class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Provider.of<EmployesProvider>(context, listen: false).employes = [];
@@ -86,7 +85,7 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
     return SizedBox(
       width: double.infinity,
       child: SingleChildScrollView(
-        child: (provider.employes.length > 0)
+        child: (provider.employes.isNotEmpty)
             ? PaginatedDataTable(
                 columns: [
                   DataColumn(label: Text('Código\nde empleado', style: style)),

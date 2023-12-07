@@ -58,7 +58,6 @@ class CompaniesProvider extends ChangeNotifier {
       companies = response.data;
       return true;
     } catch (e) {
-      print(e);
       return false;
     } finally {
       notifyListeners();
@@ -88,7 +87,6 @@ class CompaniesProvider extends ChangeNotifier {
       await getCompanies();
       return true;
     } catch (e) {
-      print(e);
       return false;
     } finally {
       loading = false;

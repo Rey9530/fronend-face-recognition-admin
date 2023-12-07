@@ -51,9 +51,6 @@ class BodyReportsWidget extends StatelessWidget {
             child: SelectCompaniesWidget(
               controller: TextEditingController(),
               title: 'Código de contrato',
-              onChange: (val) {
-                print(val);
-              },
               items: [
                 DropdownButtonData(id: '1', title: 'Limpieza'),
                 DropdownButtonData(id: '2', title: 'Mantenimiento'),

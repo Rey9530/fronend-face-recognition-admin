@@ -200,7 +200,6 @@ class ListEmployesWidget extends StatefulWidget {
 class _ListEmployesWidgetState extends State<ListEmployesWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<CompaniesProvider>(context, listen: false).getCompanies();
   }

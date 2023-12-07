@@ -58,7 +58,6 @@ class EmployesProvider extends ChangeNotifier {
       total = response.data.pagination.total;
       return true;
     } catch (e) {
-      print(e);
       return false;
     } finally {
       if (load) {
@@ -90,7 +89,6 @@ class EmployesProvider extends ChangeNotifier {
       // employes = response;
       return true;
     } catch (e) {
-      print(e);
       return false;
     } finally {
       notifyListeners();
@@ -123,7 +121,6 @@ class EmployesProvider extends ChangeNotifier {
       NavigationService.goBack();
       return true;
     } catch (e) {
-      print(e);
       return false;
     } finally {
       loading = false;
@@ -165,7 +162,6 @@ class EmployesProvider extends ChangeNotifier {
       contratations = code.data.contratation;
       return true;
     } catch (e) {
-      print(e.toString());
       return false;
     } finally {
       loading = false;

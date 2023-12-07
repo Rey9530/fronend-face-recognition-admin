@@ -73,8 +73,8 @@ class CompanieTDS extends DataTableSource {
                           BtnWidget(
                             title: "Si, Eliminar",
                             width: 200,
-                            onPress: () async {
-                              await Provider.of<CompaniesProvider>(context,
+                            onPress: () {
+                              Provider.of<CompaniesProvider>(context,
                                       listen: false)
                                   .deleteEmployes(companie.marcaEmprePk);
 

@@ -1,5 +1,5 @@
 import 'package:fluro/fluro.dart';
-import 'package:marcacion_admin/src/routes/admin_handlers.dart';
+import 'package:marcacion_admin/src/routes/auth_handlers.dart';
 import 'package:marcacion_admin/src/routes/companies_handlers.dart';
 import 'package:marcacion_admin/src/routes/dashboard_handlers.dart';
 import 'package:marcacion_admin/src/routes/employes_handlers.dart';

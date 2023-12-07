@@ -15,11 +15,13 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     this.onChange,
     this.onFieldSubmitted,
     this.isDark = false,
+    this.autofocus = false,
     this.suffixIcon,
     this.floatingLabelBehavior = FloatingLabelBehavior.always,
     this.inputFormatters,
   });
   final bool isDark;
+  final bool autofocus;
   final Function? onChange;
   final Function(String)? onFieldSubmitted;
   final String label;
@@ -61,6 +63,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: widget.autofocus,
       inputFormatters: widget.inputFormatters,
       onFieldSubmitted: widget.onFieldSubmitted,
       cursorColor: widget.isDark ? getTheme(context).primary : Colors.white,

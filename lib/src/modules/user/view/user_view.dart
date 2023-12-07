@@ -174,10 +174,7 @@ class ModalChangePasswordWidget extends StatelessWidget {
               disable: !providerUser.isReady,
               loading: providerUser.loading,
               onPress: () async {
-                var resp = await providerUser.updatePassword();
-                if (resp) {
-                  Navigator.pop(context);
-                }
+                await providerUser.updatePassword();
               },
             ),
           ],
