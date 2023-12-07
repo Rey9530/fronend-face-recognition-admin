@@ -81,14 +81,11 @@ class _SideBarMenuWidgetState extends State<_SideBarMenuWidget> {
           onPress: () => NavigationService.replaceTo(Flurorouter.employesRoute),
         ),
         ItemsMenuWidget(
-          active: menu == 'proyect',
+          active: sideMenuProvider.currentPage == Flurorouter.contractsRoute,
           title: 'Contratos',
           iconName: 'proyect',
-          onPress: () {
-            setState(() {
-              menu = 'proyect';
-            });
-          },
+          onPress: () =>
+              NavigationService.replaceTo(Flurorouter.contractsRoute),
         ),
         ItemsMenuWidget(
           active: sideMenuProvider.currentPage == Flurorouter.reportsRoute,

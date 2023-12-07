@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:marcacion_admin/src/routes/auth_handlers.dart';
 import 'package:marcacion_admin/src/routes/companies_handlers.dart';
+import 'package:marcacion_admin/src/routes/contract_handlers.dart';
 import 'package:marcacion_admin/src/routes/dashboard_handlers.dart';
 import 'package:marcacion_admin/src/routes/employes_handlers.dart';
 import 'package:marcacion_admin/src/routes/reports_handlers.dart';
@@ -13,7 +14,6 @@ class Flurorouter {
 
   // Auth Router
   static String loginRoute = '/auth/login';
-  // Dashboard
   static String dashboardRoute = '/dashboard';
   static String employesRoute = '/employes';
   static String employeAddRoute = '/employes/create';
@@ -43,43 +43,52 @@ class Flurorouter {
       transitionType: TransitionType.none,
     );
 
-    // Employes
+    // Ver employes
     router.define(
       employesRoute,
       handler: EmployesHandlers.list,
       transitionType: TransitionType.none,
     );
 
+    // agregar empleados
     router.define(
       employeAddRoute,
       handler: EmployesHandlers.addEmploye,
       transitionType: TransitionType.none,
     );
 
+    // editar empleados
     router.define(
       employeEditRoute,
       handler: EmployesHandlers.editEmploye,
       transitionType: TransitionType.none,
     );
 
-    // Dashboard
+    // empresas
     router.define(
       companiesRoute,
       handler: CompaniesHandlers.list,
       transitionType: TransitionType.none,
     );
 
-    // Dashboard
+    // Perfil
     router.define(
       userProfileRoute,
       handler: UserHandlers.view,
       transitionType: TransitionType.none,
     );
 
-    // Dashboard
+    // reportes
     router.define(
       reportsRoute,
       handler: ReportsHandlers.view,
+      transitionType: TransitionType.none,
+    );
+
+    // Contratos/ proyectos
+    router.define(
+      contractsRoute,
+      handler: ContractHandlers.view,
       transitionType: TransitionType.none,
     );
 
