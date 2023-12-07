@@ -1,7 +1,7 @@
 class ErrorResponse {
   final DateTime time;
   final String path;
-  final List<String> data;
+  final String data;
   final String message;
   final int status;
 
@@ -15,17 +15,9 @@ class ErrorResponse {
 
   factory ErrorResponse.fromJson(Map<String, dynamic> json) => ErrorResponse(
         time: DateTime.parse(json["time"]),
-        path: json["path"],
-        data: List<String>.from(json["data"].map((x) => x)),
-        message: json["message"],
-        status: json["status"],
+        path: json["path"] ?? '',
+        data: json["data"] ?? '',
+        message: json["message"] ?? '',
+        status: json["status"] ?? 500,
       );
-
-  Map<String, dynamic> toJson() => {
-        "time": time.toIso8601String(),
-        "path": path,
-        "data": List<dynamic>.from(data.map((x) => x)),
-        "message": message,
-        "status": status,
-      };
 }

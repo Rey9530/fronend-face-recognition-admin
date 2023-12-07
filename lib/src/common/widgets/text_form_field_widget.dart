@@ -125,7 +125,7 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
             : widget.suffixIcon,
         labelText: widget.label,
         hintText: widget.hinText,
-        hintStyle: const TextStyle(color: Color(0XFFDFDFDF)),
+        hintStyle: const TextStyle(color: hintextPassword),
         border: OutlineInputBorder(
           borderSide: BorderSide(
             color: widget.isDark ? getTheme(context).primary : Colors.white,

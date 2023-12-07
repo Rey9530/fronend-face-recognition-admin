@@ -30,6 +30,8 @@ class BtnWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
         ),
         onPressed: () {
+          if (disable) return;
+          if (loading) return;
           onPress();
         },
         child: Row(
