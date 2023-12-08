@@ -27,16 +27,16 @@ class EmployesTDS extends DataTableSource {
         DataCell(Text(employe.empNombres)),
         DataCell(Text(employe.empApellidos)),
         DataCell(Text(employe.empFechaNacimiento)),
-        DataCell(Text(employe.marcaGenGenero.genNombre)),
-        DataCell(Text(employe.marcaCnContratacion.cnNombre)),
-        DataCell(Text(employe.marcaUbiUbicacion.ubiNombre)),
+        DataCell(Text(employe.marGenGeneros.genNombre)),
+        DataCell(Text(employe.marConContrataciones.conNombre)),
+        DataCell(Text(employe.marUbiUbicaciones.ubiNombre)),
         DataCell(
           Row(
             children: [
               IconButton(
                 onPressed: () {
                   NavigationService.navigateTo(
-                      "/employes/update/${employe.marcaEmpPk}");
+                      "/employes/update/${employe.empCodigo}");
                 },
                 icon: Container(
                   width: 50,
@@ -81,7 +81,7 @@ class EmployesTDS extends DataTableSource {
                             onPress: () async {
                               await Provider.of<EmployesProvider>(context,
                                       listen: false)
-                                  .deleteEmployes(employe.marcaEmpPk);
+                                  .deleteEmployes(employe.empCodigo);
 
                               Navigator.pop(context);
                             },

@@ -27,99 +27,101 @@ class ContractsResponse {
 }
 
 class Contract {
-  final String marcaCtrPk;
+  final String ctrCodigo;
   final String ctrNombre;
-  final String ctrNumeroContrato;
+  final String ctrNumContrato;
   final int ctrHorasExtras;
   final String ctrFechaInicio;
   final String ctrFechaFin;
-  final String ctrFechaInicioPro;
-  final String ctrFechaFinPro;
+  final String ctrFechaInipro;
+  final String ctrFechaFinpro;
   final String ctrEstado;
   final DateTime ctrFeccrea;
   final DateTime ctrFecmod;
   final String ctrUsrcrea;
   final String ctrUsrmod;
-  final String marcaCtrEmpreFk;
-  final MarcaEmpreEmpresas marcaEmpreEmpresas;
+  final String ctrCodepr;
+  final MarEprEmpresas marEprEmpresas;
 
   Contract({
-    required this.marcaCtrPk,
+    required this.ctrCodigo,
     required this.ctrNombre,
-    required this.ctrNumeroContrato,
+    required this.ctrNumContrato,
     required this.ctrHorasExtras,
     required this.ctrFechaInicio,
     required this.ctrFechaFin,
-    required this.ctrFechaInicioPro,
-    required this.ctrFechaFinPro,
+    required this.ctrFechaInipro,
+    required this.ctrFechaFinpro,
     required this.ctrEstado,
     required this.ctrFeccrea,
     required this.ctrFecmod,
     required this.ctrUsrcrea,
     required this.ctrUsrmod,
-    required this.marcaCtrEmpreFk,
-    required this.marcaEmpreEmpresas,
+    required this.ctrCodepr,
+    required this.marEprEmpresas,
   });
 
   factory Contract.fromJson(Map<String, dynamic> json) => Contract(
-        marcaCtrPk: json["marca_ctr_pk"],
+        ctrCodigo: json["ctr_codigo"],
         ctrNombre: json["ctr_nombre"],
-        ctrNumeroContrato: json["ctr_numero_contrato"],
+        ctrNumContrato: json["ctr_num_contrato"],
         ctrHorasExtras: json["ctr_horas_extras"],
-        ctrFechaInicio: DateFormat("dd/MM/y")
-            .format(DateTime.parse(json["ctr_fecha_inicio"])),
-        ctrFechaFin:
-            DateFormat("dd/MM/y").format(DateTime.parse(json["ctr_fecha_fin"])),
-        ctrFechaInicioPro: json["ctr_fecha_inicio_pro"] != null
+        ctrFechaInicio: json["ctr_fecha_inicio"] != null
             ? DateFormat("dd/MM/y")
-                .format(DateTime.parse(json["ctr_fecha_inicio_pro"]))
+                .format(DateTime.parse(json["ctr_fecha_inicio"]))
             : "",
-        ctrFechaFinPro: json["ctr_fecha_fin_pro"] != null
+        ctrFechaFin: json["ctr_fecha_fin"] != null
             ? DateFormat("dd/MM/y")
-                .format(DateTime.parse(json["ctr_fecha_fin_pro"]))
+                .format(DateTime.parse(json["ctr_fecha_fin"]))
+            : "",
+        ctrFechaInipro: json["ctr_fecha_inipro"] != null
+            ? DateFormat("dd/MM/y")
+                .format(DateTime.parse(json["ctr_fecha_inipro"]))
+            : "",
+        ctrFechaFinpro: json["ctr_fecha_finpro"] != null
+            ? DateFormat("dd/MM/y")
+                .format(DateTime.parse(json["ctr_fecha_finpro"]))
             : "",
         ctrEstado: json["ctr_estado"],
         ctrFeccrea: DateTime.parse(json["ctr_feccrea"]),
         ctrFecmod: DateTime.parse(json["ctr_fecmod"]),
         ctrUsrcrea: json["ctr_usrcrea"],
         ctrUsrmod: json["ctr_usrmod"],
-        marcaCtrEmpreFk: json["marca_ctr_empre_fk"],
-        marcaEmpreEmpresas:
-            MarcaEmpreEmpresas.fromJson(json["marca_empre_empresas"]),
+        ctrCodepr: json["ctr_codepr"],
+        marEprEmpresas: MarEprEmpresas.fromJson(json["mar_epr_empresas"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_ctr_pk": marcaCtrPk,
+        "ctr_codigo": ctrCodigo,
         "ctr_nombre": ctrNombre,
-        "ctr_numero_contrato": ctrNumeroContrato,
+        "ctr_num_contrato": ctrNumContrato,
         "ctr_horas_extras": ctrHorasExtras,
         "ctr_fecha_inicio": ctrFechaInicio,
         "ctr_fecha_fin": ctrFechaFin,
-        "ctr_fecha_inicio_pro": ctrFechaInicioPro,
-        "ctr_fecha_fin_pro": ctrFechaFinPro,
+        "ctr_fecha_inipro": ctrFechaInipro,
+        "ctr_fecha_finpro": ctrFechaFinpro,
         "ctr_estado": ctrEstado,
         "ctr_feccrea": ctrFeccrea.toIso8601String(),
         "ctr_fecmod": ctrFecmod.toIso8601String(),
         "ctr_usrcrea": ctrUsrcrea,
         "ctr_usrmod": ctrUsrmod,
-        "marca_ctr_empre_fk": marcaCtrEmpreFk,
-        "marca_empre_empresas": marcaEmpreEmpresas.toJson(),
+        "ctr_codepr": ctrCodepr,
+        "mar_epr_empresas": marEprEmpresas.toJson(),
       };
 }
 
-class MarcaEmpreEmpresas {
-  final String empreNombre;
+class MarEprEmpresas {
+  final String eprNombre;
 
-  MarcaEmpreEmpresas({
-    required this.empreNombre,
+  MarEprEmpresas({
+    required this.eprNombre,
   });
 
-  factory MarcaEmpreEmpresas.fromJson(Map<String, dynamic> json) =>
-      MarcaEmpreEmpresas(
-        empreNombre: json["empre_nombre"],
+  factory MarEprEmpresas.fromJson(Map<String, dynamic> json) => MarEprEmpresas(
+        eprNombre: json["epr_nombre"],
       );
 
   Map<String, dynamic> toJson() => {
-        "empre_nombre": empreNombre,
+        "epr_nombre": eprNombre,
       };
 }

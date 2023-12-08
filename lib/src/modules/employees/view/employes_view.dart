@@ -273,8 +273,8 @@ class ListComaniesWidget extends StatelessWidget {
               if (snapshot.data != null)
                 ...snapshot.data!.map(
                   (e) => DropdownButtonData(
-                    id: e.marcaEmprePk,
-                    title: e.empreNombre,
+                    id: e.eprCodigo,
+                    title: e.eprNombre,
                   ),
                 )
             ],

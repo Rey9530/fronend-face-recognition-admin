@@ -23,11 +23,11 @@ class ContractsTDS extends DataTableSource {
       index: index,
       cells: [
         DataCell(Text(contract.ctrNombre)),
-        DataCell(Text(contract.ctrNumeroContrato)),
-        DataCell(Text(contract.marcaEmpreEmpresas.empreNombre)),
+        DataCell(Text(contract.ctrNumContrato)),
+        DataCell(Text(contract.marEprEmpresas.eprNombre)),
         DataCell(Text(contract.ctrFechaInicio)),
         DataCell(Text(contract.ctrFechaFin)),
-        DataCell(Text(contract.ctrFechaInicioPro.isEmpty ? "NO" : "SI")),
+        DataCell(Text(contract.ctrFechaInipro.isEmpty ? "NO" : "SI")),
         DataCell(
           Row(
             children: [
@@ -79,7 +79,7 @@ class ContractsTDS extends DataTableSource {
                             onPress: () async {
                               await Provider.of<ContractsProvider>(context,
                                       listen: false)
-                                  .deleteContracts(contract.marcaCtrPk);
+                                  .deleteContracts(contract.ctrCodigo);
 
                               Navigator.pop(context);
                             },

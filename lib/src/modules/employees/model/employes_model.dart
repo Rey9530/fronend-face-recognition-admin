@@ -47,137 +47,137 @@ class RespData {
 }
 
 class Employe {
-  final String marcaEmpPk;
   final String empCodigo;
+  final String empCodigoEmp;
   final String empFechaNacimiento;
   final String empNombres;
   final String empApellidos;
   final String empEstado;
-  final String marcaEmpEmpreFk;
   final DateTime empFeccrea;
   final DateTime empFecmod;
   final String empUsrcrea;
   final String empUsrmod;
-  final String marcaEmpGenFk;
-  final String marcaEmpUbiFk;
-  final String marcaEmpCnFk;
-  final MarcaGenGenero marcaGenGenero;
-  final List<dynamic> marcaAsigAsignacion;
-  final MarcaCnContratacion marcaCnContratacion;
-  final MarcaUbiUbicacion marcaUbiUbicacion;
+  final String empCodgen;
+  final String empCodemp;
+  final String empCodubi;
+  final String empCodcon;
+  final MarGenGeneros marGenGeneros;
+  final List<dynamic> marAsiAsignacion;
+  final MarConContrataciones marConContrataciones;
+  final MarUbiUbicaciones marUbiUbicaciones;
 
   Employe({
-    required this.marcaEmpPk,
     required this.empCodigo,
+    required this.empCodigoEmp,
     required this.empFechaNacimiento,
     required this.empNombres,
     required this.empApellidos,
     required this.empEstado,
-    required this.marcaEmpEmpreFk,
     required this.empFeccrea,
     required this.empFecmod,
     required this.empUsrcrea,
     required this.empUsrmod,
-    required this.marcaEmpGenFk,
-    required this.marcaEmpUbiFk,
-    required this.marcaEmpCnFk,
-    required this.marcaGenGenero,
-    required this.marcaAsigAsignacion,
-    required this.marcaCnContratacion,
-    required this.marcaUbiUbicacion,
+    required this.empCodgen,
+    required this.empCodemp,
+    required this.empCodubi,
+    required this.empCodcon,
+    required this.marGenGeneros,
+    required this.marAsiAsignacion,
+    required this.marConContrataciones,
+    required this.marUbiUbicaciones,
   });
 
   factory Employe.fromJson(Map<String, dynamic> json) => Employe(
-        marcaEmpPk: json["marca_emp_pk"],
         empCodigo: json["emp_codigo"],
+        empCodigoEmp: json["emp_codigo_emp"],
         empFechaNacimiento: DateFormat("dd/MM/y")
             .format(DateTime.parse(json["emp_fecha_nacimiento"])),
         empNombres: json["emp_nombres"],
         empApellidos: json["emp_apellidos"],
         empEstado: json["emp_estado"],
-        marcaEmpEmpreFk: json["marca_emp_empre_fk"],
         empFeccrea: DateTime.parse(json["emp_feccrea"]),
         empFecmod: DateTime.parse(json["emp_fecmod"]),
         empUsrcrea: json["emp_usrcrea"],
         empUsrmod: json["emp_usrmod"],
-        marcaEmpGenFk: json["marca_emp_gen_fk"],
-        marcaEmpUbiFk: json["marca_emp_ubi_fk"],
-        marcaEmpCnFk: json["marca_emp_cn_fk"],
-        marcaGenGenero: MarcaGenGenero.fromJson(json["marca_gen_genero"]),
-        marcaAsigAsignacion:
-            List<dynamic>.from(json["marca_asig_asignacion"].map((x) => x)),
-        marcaCnContratacion:
-            MarcaCnContratacion.fromJson(json["marca_cn_contratacion"]),
-        marcaUbiUbicacion:
-            MarcaUbiUbicacion.fromJson(json["marca_ubi_ubicacion"]),
+        empCodgen: json["emp_codgen"],
+        empCodemp: json["emp_codemp"],
+        empCodubi: json["emp_codubi"],
+        empCodcon: json["emp_codcon"],
+        marGenGeneros: MarGenGeneros.fromJson(json["mar_gen_generos"]),
+        marAsiAsignacion:
+            List<dynamic>.from(json["mar_asi_asignacion"].map((x) => x)),
+        marConContrataciones:
+            MarConContrataciones.fromJson(json["mar_con_contrataciones"]),
+        marUbiUbicaciones:
+            MarUbiUbicaciones.fromJson(json["mar_ubi_ubicaciones"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_emp_pk": marcaEmpPk,
         "emp_codigo": empCodigo,
+        "emp_codigo_emp": empCodigoEmp,
         "emp_fecha_nacimiento": empFechaNacimiento,
         "emp_nombres": empNombres,
         "emp_apellidos": empApellidos,
         "emp_estado": empEstado,
-        "marca_emp_empre_fk": marcaEmpEmpreFk,
         "emp_feccrea": empFeccrea.toIso8601String(),
         "emp_fecmod": empFecmod.toIso8601String(),
         "emp_usrcrea": empUsrcrea,
         "emp_usrmod": empUsrmod,
-        "marca_emp_gen_fk": marcaEmpGenFk,
-        "marca_emp_ubi_fk": marcaEmpUbiFk,
-        "marca_emp_cn_fk": marcaEmpCnFk,
-        "marca_gen_genero": marcaGenGenero.toJson(),
-        "marca_asig_asignacion":
-            List<dynamic>.from(marcaAsigAsignacion.map((x) => x)),
-        "marca_cn_contratacion": marcaCnContratacion.toJson(),
-        "marca_ubi_ubicacion": marcaUbiUbicacion.toJson(),
+        "emp_codgen": empCodgen,
+        "emp_codemp": empCodemp,
+        "emp_codubi": empCodubi,
+        "emp_codcon": empCodcon,
+        "mar_gen_generos": marGenGeneros.toJson(),
+        "mar_asi_asignacion":
+            List<dynamic>.from(marAsiAsignacion.map((x) => x)),
+        "mar_con_contrataciones": marConContrataciones.toJson(),
+        "mar_ubi_ubicaciones": marUbiUbicaciones.toJson(),
       };
 }
 
-class MarcaCnContratacion {
-  final String marcaCnPk;
-  final String cnNombre;
-  final String cnEstado;
-  final DateTime cnFeccrea;
-  final DateTime cnFecmod;
-  final String cnUsrcrea;
-  final String cnUsrmod;
+class MarConContrataciones {
+  final String conCodigo;
+  final String conNombre;
+  final String conEstado;
+  final DateTime conFeccrea;
+  final DateTime conFecmod;
+  final String conUsrcrea;
+  final String conUsrmod;
 
-  MarcaCnContratacion({
-    required this.marcaCnPk,
-    required this.cnNombre,
-    required this.cnEstado,
-    required this.cnFeccrea,
-    required this.cnFecmod,
-    required this.cnUsrcrea,
-    required this.cnUsrmod,
+  MarConContrataciones({
+    required this.conCodigo,
+    required this.conNombre,
+    required this.conEstado,
+    required this.conFeccrea,
+    required this.conFecmod,
+    required this.conUsrcrea,
+    required this.conUsrmod,
   });
 
-  factory MarcaCnContratacion.fromJson(Map<String, dynamic> json) =>
-      MarcaCnContratacion(
-        marcaCnPk: json["marca_cn_pk"],
-        cnNombre: json["cn_nombre"],
-        cnEstado: json["cn_estado"],
-        cnFeccrea: DateTime.parse(json["cn_feccrea"]),
-        cnFecmod: DateTime.parse(json["cn_fecmod"]),
-        cnUsrcrea: json["cn_usrcrea"],
-        cnUsrmod: json["cn_usrmod"],
+  factory MarConContrataciones.fromJson(Map<String, dynamic> json) =>
+      MarConContrataciones(
+        conCodigo: json["con_codigo"],
+        conNombre: json["con_nombre"],
+        conEstado: json["con_estado"],
+        conFeccrea: DateTime.parse(json["con_feccrea"]),
+        conFecmod: DateTime.parse(json["con_fecmod"]),
+        conUsrcrea: json["con_usrcrea"],
+        conUsrmod: json["con_usrmod"],
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_cn_pk": marcaCnPk,
-        "cn_nombre": cnNombre,
-        "cn_estado": cnEstado,
-        "cn_feccrea": cnFeccrea.toIso8601String(),
-        "cn_fecmod": cnFecmod.toIso8601String(),
-        "cn_usrcrea": cnUsrcrea,
-        "cn_usrmod": cnUsrmod,
+        "con_codigo": conCodigo,
+        "con_nombre": conNombre,
+        "con_estado": conEstado,
+        "con_feccrea": conFeccrea.toIso8601String(),
+        "con_fecmod": conFecmod.toIso8601String(),
+        "con_usrcrea": conUsrcrea,
+        "con_usrmod": conUsrmod,
       };
 }
 
-class MarcaGenGenero {
-  final String marcaGenPk;
+class MarGenGeneros {
+  final String genCodigo;
   final String genNombre;
   final String genEstado;
   final DateTime genFeccrea;
@@ -185,8 +185,8 @@ class MarcaGenGenero {
   final String genUsrcrea;
   final String genUsrmod;
 
-  MarcaGenGenero({
-    required this.marcaGenPk,
+  MarGenGeneros({
+    required this.genCodigo,
     required this.genNombre,
     required this.genEstado,
     required this.genFeccrea,
@@ -195,8 +195,8 @@ class MarcaGenGenero {
     required this.genUsrmod,
   });
 
-  factory MarcaGenGenero.fromJson(Map<String, dynamic> json) => MarcaGenGenero(
-        marcaGenPk: json["marca_gen_pk"],
+  factory MarGenGeneros.fromJson(Map<String, dynamic> json) => MarGenGeneros(
+        genCodigo: json["gen_codigo"],
         genNombre: json["gen_nombre"],
         genEstado: json["gen_estado"],
         genFeccrea: DateTime.parse(json["gen_feccrea"]),
@@ -206,7 +206,7 @@ class MarcaGenGenero {
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_gen_pk": marcaGenPk,
+        "gen_codigo": genCodigo,
         "gen_nombre": genNombre,
         "gen_estado": genEstado,
         "gen_feccrea": genFeccrea.toIso8601String(),
@@ -216,8 +216,8 @@ class MarcaGenGenero {
       };
 }
 
-class MarcaUbiUbicacion {
-  final String marcaUbiPk;
+class MarUbiUbicaciones {
+  final String ubiCodigo;
   final String ubiNombre;
   final String ubiEstado;
   final DateTime ubiFeccrea;
@@ -225,8 +225,8 @@ class MarcaUbiUbicacion {
   final String ubiUsrcrea;
   final String ubiUsrmod;
 
-  MarcaUbiUbicacion({
-    required this.marcaUbiPk,
+  MarUbiUbicaciones({
+    required this.ubiCodigo,
     required this.ubiNombre,
     required this.ubiEstado,
     required this.ubiFeccrea,
@@ -235,9 +235,9 @@ class MarcaUbiUbicacion {
     required this.ubiUsrmod,
   });
 
-  factory MarcaUbiUbicacion.fromJson(Map<String, dynamic> json) =>
-      MarcaUbiUbicacion(
-        marcaUbiPk: json["marca_ubi_pk"],
+  factory MarUbiUbicaciones.fromJson(Map<String, dynamic> json) =>
+      MarUbiUbicaciones(
+        ubiCodigo: json["ubi_codigo"],
         ubiNombre: json["ubi_nombre"],
         ubiEstado: json["ubi_estado"],
         ubiFeccrea: DateTime.parse(json["ubi_feccrea"]),
@@ -247,7 +247,7 @@ class MarcaUbiUbicacion {
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_ubi_pk": marcaUbiPk,
+        "ubi_codigo": ubiCodigo,
         "ubi_nombre": ubiNombre,
         "ubi_estado": ubiEstado,
         "ubi_feccrea": ubiFeccrea.toIso8601String(),

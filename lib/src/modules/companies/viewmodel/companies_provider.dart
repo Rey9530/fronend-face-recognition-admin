@@ -30,12 +30,12 @@ class CompaniesProvider extends ChangeNotifier {
   }
 
   edit(Companie companie) {
-    id = companie.marcaEmprePk;
-    companyName.text = companie.empreNombre;
-    companyAdress.text = companie.empreDireccion;
-    companyContact.text = companie.empreContactoNombre;
-    companyEmail.text = companie.empreContactoCorreo;
-    companyPhone.text = companie.empreContactoTelefono;
+    id = companie.eprCodigo;
+    companyName.text = companie.eprNombre;
+    companyAdress.text = companie.eprDireccion;
+    companyContact.text = companie.eprContactoNombre;
+    companyEmail.text = companie.eprContactoCorreo;
+    companyPhone.text = companie.eprContactoTelefono;
     validarInput();
   }
 

@@ -27,7 +27,7 @@ class AuthProvider extends ChangeNotifier {
       LocalStorage.prefs.setString('token', user!.token);
       LocalStorage.prefs.setString('nombres', user!.usrNombres);
       LocalStorage.prefs.setString('apellidos', user!.usrApellidos);
-      LocalStorage.prefs.setString('codigo', user!.usrCodigo);
+      LocalStorage.prefs.setString('codigo', user!.usrCodigoEmple);
       DioConexion.configureDio();
       NavigationService.replaceTo(Flurorouter.dashboardRoute);
 

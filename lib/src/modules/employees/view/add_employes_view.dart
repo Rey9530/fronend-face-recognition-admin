@@ -160,15 +160,7 @@ class _FormewEmployeWidget extends StatelessWidget {
                     onChange: (String valor) async {
                       if (valor.length < 10) return;
                       try {
-                        var date = valor.split("/");
-                        String birthDate = DateFormat("yyyy-MM-dd").format(
-                          DateTime(
-                            int.parse(date[2]),
-                            int.parse(date[1]),
-                            int.parse(date[0]),
-                          ),
-                        );
-                        await provider.generateCode(birthDate);
+                        await provider.generateCode(valor);
                       } catch (e) {
                         return;
                       }
@@ -219,7 +211,7 @@ class _FormewEmployeWidget extends StatelessWidget {
                     items: [
                       ...provider.sedes.map(
                         (e) => DropdownButtonData(
-                          id: e.marcaUbiPk,
+                          id: e.ubiCodigo,
                           title: e.ubiNombre,
                         ),
                       )
@@ -241,8 +233,8 @@ class _FormewEmployeWidget extends StatelessWidget {
                     items: [
                       ...provider.companies.map(
                         (e) => DropdownButtonData(
-                          id: e.marcaEmprePk,
-                          title: e.empreNombre,
+                          id: e.eprCodigo,
+                          title: e.eprNombre,
                         ),
                       )
                     ],
@@ -294,8 +286,8 @@ class _FormewEmployeWidget extends StatelessWidget {
                     items: [
                       ...provider.contratations.map(
                         (e) => DropdownButtonData(
-                          id: e.marcaCnPk,
-                          title: e.cnNombre,
+                          id: e.conCodigo,
+                          title: e.conNombre,
                         ),
                       )
                     ],
@@ -421,7 +413,7 @@ class _SelectGenderWidgetState extends State<SelectGenderWidget> {
             child: InkWell(
               onTap: () {
                 setState(() {
-                  provider.employeGender.text = e.marcaGenPk;
+                  provider.employeGender.text = e.genCodigo;
                 });
               },
               child: Row(
@@ -434,7 +426,7 @@ class _SelectGenderWidgetState extends State<SelectGenderWidget> {
                     ),
                   ),
                   Radio(
-                    value: e.marcaGenPk,
+                    value: e.genCodigo,
                     groupValue: provider.employeGender.text,
                     onChanged: (v) {
                       setState(() {

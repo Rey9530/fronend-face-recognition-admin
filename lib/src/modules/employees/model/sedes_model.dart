@@ -23,21 +23,21 @@ class SedesResp {
 }
 
 class Sede {
-  final String marcaUbiPk;
+  final String ubiCodigo;
   final String ubiNombre;
 
   Sede({
-    required this.marcaUbiPk,
+    required this.ubiCodigo,
     required this.ubiNombre,
   });
 
   factory Sede.fromJson(Map<String, dynamic> json) => Sede(
-        marcaUbiPk: json["marca_ubi_pk"],
+        ubiCodigo: json["ubi_codigo"],
         ubiNombre: json["ubi_nombre"],
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_ubi_pk": marcaUbiPk,
+        "ubi_codigo": ubiCodigo,
         "ubi_nombre": ubiNombre,
       };
 }

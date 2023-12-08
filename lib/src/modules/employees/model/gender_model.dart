@@ -23,21 +23,21 @@ class GenderResp {
 }
 
 class Gender {
-  final String marcaGenPk;
+  final String genCodigo;
   final String genNombre;
 
   Gender({
-    required this.marcaGenPk,
+    required this.genCodigo,
     required this.genNombre,
   });
 
   factory Gender.fromJson(Map<String, dynamic> json) => Gender(
-        marcaGenPk: json["marca_gen_pk"],
+        genCodigo: json["gen_codigo"],
         genNombre: json["gen_nombre"],
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_gen_pk": marcaGenPk,
+        "gen_codigo": genCodigo,
         "gen_nombre": genNombre,
       };
 }

@@ -19,11 +19,11 @@ class CompanieTDS extends DataTableSource {
           MaterialStateColor.resolveWith((states) => const Color(0XFFFFFFFF)),
       index: index,
       cells: [
-        DataCell(Text(companie.empreNombre)),
-        DataCell(Text(companie.empreDireccion)),
-        DataCell(Text(companie.empreContactoNombre)),
-        DataCell(Text(companie.empreContactoCorreo)),
-        DataCell(Text(companie.empreContactoTelefono)),
+        DataCell(Text(companie.eprNombre)),
+        DataCell(Text(companie.eprDireccion)),
+        DataCell(Text(companie.eprContactoNombre)),
+        DataCell(Text(companie.eprContactoCorreo)),
+        DataCell(Text(companie.eprContactoTelefono)),
         // Text(companie.marcaEmprePk)
         DataCell(
           Row(
@@ -51,7 +51,7 @@ class CompanieTDS extends DataTableSource {
                       children: [
                         Image.asset("assets/icons/borrarred.png"),
                         Text(
-                          'Eliminar ${companie.empreNombre}',
+                          'Eliminar ${companie.eprNombre}',
                           style: const TextStyle(color: error),
                         ),
                       ],
@@ -76,7 +76,7 @@ class CompanieTDS extends DataTableSource {
                             onPress: () {
                               Provider.of<CompaniesProvider>(context,
                                       listen: false)
-                                  .deleteEmployes(companie.marcaEmprePk);
+                                  .deleteEmployes(companie.eprCodigo);
 
                               Navigator.pop(context);
                             },

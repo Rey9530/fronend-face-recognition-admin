@@ -25,21 +25,21 @@ class ContratationResp {
 }
 
 class Contratation {
-  final String marcaCnPk;
-  final String cnNombre;
+  final String conCodigo;
+  final String conNombre;
 
   Contratation({
-    required this.marcaCnPk,
-    required this.cnNombre,
+    required this.conCodigo,
+    required this.conNombre,
   });
 
   factory Contratation.fromJson(Map<String, dynamic> json) => Contratation(
-        marcaCnPk: json["marca_cn_pk"],
-        cnNombre: json["cn_nombre"],
+        conCodigo: json["con_codigo"],
+        conNombre: json["con_nombre"],
       );
 
   Map<String, dynamic> toJson() => {
-        "marca_cn_pk": marcaCnPk,
-        "cn_nombre": cnNombre,
+        "con_codigo": conCodigo,
+        "con_nombre": conNombre,
       };
 }

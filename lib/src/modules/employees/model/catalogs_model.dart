@@ -1,4 +1,5 @@
-import 'package:marcacion_admin/src/modules/companies/model/companies_model.dart';
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:marcacion_admin/src/modules/employees/model/contratation_model.dart';
 import 'package:marcacion_admin/src/modules/employees/model/gender_model.dart';
 import 'package:marcacion_admin/src/modules/employees/model/sedes_model.dart';
@@ -32,7 +33,7 @@ class CatalogData {
   final List<Sede> sedes;
   final List<Contratation> contratation;
   final List<Gender> gender;
-  final List<Companie> companies;
+  final List<Company> companies;
 
   CatalogData({
     required this.sedes,
@@ -42,26 +43,13 @@ class CatalogData {
   });
 
   factory CatalogData.fromJson(Map<String, dynamic> json) => CatalogData(
-        sedes: List<Sede>.from(
-          json["sedes"].map(
-            (x) => Sede.fromJson(x),
-          ),
-        ),
+        sedes: List<Sede>.from(json["sedes"].map((x) => Sede.fromJson(x))),
         contratation: List<Contratation>.from(
-          json["contratation"].map(
-            (x) => Contratation.fromJson(x),
-          ),
-        ),
-        gender: List<Gender>.from(
-          json["gender"].map(
-            (x) => Gender.fromJson(x),
-          ),
-        ),
-        companies: List<Companie>.from(
-          json["companies"].map(
-            (x) => Companie.fromJson(x),
-          ),
-        ),
+            json["contratation"].map((x) => Contratation.fromJson(x))),
+        gender:
+            List<Gender>.from(json["gender"].map((x) => Gender.fromJson(x))),
+        companies: List<Company>.from(
+            json["companies"].map((x) => Company.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,5 +57,25 @@ class CatalogData {
         "contratation": List<dynamic>.from(contratation.map((x) => x.toJson())),
         "gender": List<dynamic>.from(gender.map((x) => x.toJson())),
         "companies": List<dynamic>.from(companies.map((x) => x.toJson())),
+      };
+}
+
+class Company {
+  final String eprCodigo;
+  final String eprNombre;
+
+  Company({
+    required this.eprCodigo,
+    required this.eprNombre,
+  });
+
+  factory Company.fromJson(Map<String, dynamic> json) => Company(
+        eprCodigo: json["epr_codigo"],
+        eprNombre: json["epr_nombre"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "epr_codigo": eprCodigo,
+        "epr_nombre": eprNombre,
       };
 }

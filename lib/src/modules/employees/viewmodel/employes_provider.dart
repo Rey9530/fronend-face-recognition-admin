@@ -23,7 +23,7 @@ class EmployesProvider extends ChangeNotifier {
 
   List<Employe> employes = [];
   List<Sede> sedes = [];
-  List<Companie> companies = [];
+  List<Company> companies = [];
   List<Contratation> contratations = [];
   List<Gender> genders = [];
 
@@ -71,19 +71,20 @@ class EmployesProvider extends ChangeNotifier {
     try {
       final resp = await DioConexion.get_('/employes/$uuid');
       final response = EmployeResponse.fromJson(resp).data;
-      employeCode = response.empCodigo;
+      employeCode = response.empCodigoEmp;
       employeName = TextEditingController(text: response.empNombres);
       employeSurname = TextEditingController(text: response.empApellidos);
       employeBirthdate =
           TextEditingController(text: response.empFechaNacimiento);
       employeGender =
-          TextEditingController(text: response.marcaGenGenero.marcaGenPk);
+          TextEditingController(text: response.marGenGeneros.genCodigo);
       employeLocation =
-          TextEditingController(text: response.marcaUbiUbicacion.marcaUbiPk);
-      employeCompany = TextEditingController(text: response.marcaEmpEmpreFk);
+          TextEditingController(text: response.marUbiUbicaciones.ubiCodigo);
+      employeCompany = TextEditingController(text: response.empCodemp);
       // employeContact = TextEditingController(text: "");//TODO: PENDIENTE
       // employeHours = TextEditingController(text: "");//TODO: PENDIENTE
-      employeContratation = TextEditingController(text: response.marcaEmpCnFk);
+      employeContratation =
+          TextEditingController(text: response.marConContrataciones.conCodigo);
       employeDateStart = TextEditingController(text: ""); //TODO: PENDIENTE
       employeDateEnd = TextEditingController(text: ""); //TODO: PENDIENTE
       // employes = response;
