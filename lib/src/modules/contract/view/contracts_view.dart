@@ -130,7 +130,7 @@ class _BtnNewContractsWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // NavigationService.navigateTo(Flurorouter.employeAddRoute); //TODO: CAMBIAR
+          NavigationService.navigateTo(Flurorouter.contractsCreateRoute);
         },
         child: const Text(
           "Nuevo contrato",

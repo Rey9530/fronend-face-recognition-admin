@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/modules/auth/model/models_auth.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/modules/contract/model/companies_model.dart';
 import 'package:marcacion_admin/src/modules/contract/model/contracts_model.dart';
 
 class ContractsProvider extends ChangeNotifier {
+  final formKey = GlobalKey<FormState>();
   User? user;
 
   bool isReady = false;
@@ -53,6 +55,20 @@ class ContractsProvider extends ChangeNotifier {
       if (load) {
         loading = false;
       }
+      notifyListeners();
+    }
+  }
+
+  List<ContractCompanies> companies = [];
+  Future<bool> getCompanies(uuid) async {
+    try {
+      final resp = await DioConexion.get_('/contracts/get/companies');
+      final response = CompaniesResponse.fromJson(resp);
+      companies = response.data;
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
       notifyListeners();
     }
   }

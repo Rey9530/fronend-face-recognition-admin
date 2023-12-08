@@ -22,6 +22,7 @@ class Flurorouter {
   static String userProfileRoute = '/profile';
   static String reportsRoute = '/reports';
   static String contractsRoute = '/contracts';
+  static String contractsCreateRoute = '/contracts/create';
 
   static void configureRoutes() {
     // Auth Routes
@@ -89,6 +90,11 @@ class Flurorouter {
     router.define(
       contractsRoute,
       handler: ContractHandlers.view,
+      transitionType: TransitionType.none,
+    );
+    router.define(
+      contractsCreateRoute,
+      handler: ContractHandlers.form,
       transitionType: TransitionType.none,
     );
 
