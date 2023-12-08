@@ -44,7 +44,7 @@ class _BodyContract extends StatelessWidget {
           SizedBox(height: 20),
           _TextParraWidget(),
           SizedBox(height: 20),
-          // _ListContracWidget()
+          _ListEmployestWidget()
         ],
       ),
     );
@@ -62,9 +62,7 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
   @override
   void initState() {
     super.initState();
-
-    // Provider.of<ContractsProvider>(context, listen: false).employes = [];
-    // Provider.of<ContractsProvider>(context, listen: false).getEmployes();
+    Provider.of<ContractsProvider>(context, listen: false).getContracts();
   }
 
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
@@ -79,41 +77,40 @@ class _ListEmployestWidgetState extends State<_ListEmployestWidget> {
     return SizedBox(
       width: double.infinity,
       child: SingleChildScrollView(
-          child:
-              // (provider.contracts.isNotEmpty)
-              //     ?
-              PaginatedDataTable(
-        columns: [
-          DataColumn(label: Text('Código\nde empleado', style: style)),
-          DataColumn(label: Text('Nombres', style: style)),
-          DataColumn(label: Text('Apellidos', style: style)),
-          DataColumn(label: Text('Fecha de\nnacimiento', style: style)),
-          DataColumn(label: Text('Género', style: style)),
-          DataColumn(label: Text('Tipo de\ncontratación', style: style)),
-          DataColumn(label: Text('Sede\nasignada', style: style)),
-          DataColumn(label: Text('Acciones', style: style)),
-        ],
-        source: ContractsTDS(
-          provider.contracts,
-          context,
-          provider.total,
-        ),
-        // onPageChanged: (value) async {
-        //   provider.quantity = value;
-        //   await provider.getEmployes(true);
-        // },
-        onRowsPerPageChanged: (value) async {
-          // provider.quantity = value ?? 10;
-          // await provider.getEmployes(true);
-          setState(() {
-            _rowsPerPage = value ?? 10;
-          });
-        },
-        rowsPerPage: _rowsPerPage,
-        headingRowColor: MaterialStateProperty.all(headerRowTable),
-      )
-          // : const NotDataWidget(),
-          ),
+        child: (provider.contracts.isNotEmpty)
+            ? PaginatedDataTable(
+                columns: [
+                  DataColumn(label: Text('Nombre de contrato', style: style)),
+                  DataColumn(label: Text('Código de\ncontrato', style: style)),
+                  DataColumn(
+                    label: Text('Nombre\nde la empresa', style: style),
+                  ),
+                  DataColumn(label: Text('Inicio de\ncontrato', style: style)),
+                  DataColumn(label: Text('Fin de\ncontrato', style: style)),
+                  DataColumn(label: Text('Prorrogable', style: style)),
+                  DataColumn(label: Text('Acciones', style: style)),
+                ],
+                source: ContractsTDS(
+                  provider.contracts,
+                  context,
+                  provider.contracts.length,
+                ),
+                // onPageChanged: (value) async {
+                //   provider.quantity = value;
+                //   await provider.getEmployes(true);
+                // },
+                onRowsPerPageChanged: (value) async {
+                  // provider.quantity = value ?? 10;
+                  // await provider.getEmployes(true);
+                  setState(() {
+                    _rowsPerPage = value ?? 10;
+                  });
+                },
+                rowsPerPage: _rowsPerPage,
+                headingRowColor: MaterialStateProperty.all(headerRowTable),
+              )
+            : const NotDataWidget(),
+      ),
     );
   }
 }

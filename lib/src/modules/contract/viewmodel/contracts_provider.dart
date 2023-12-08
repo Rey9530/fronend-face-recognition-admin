@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/modules/auth/model/models_auth.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
+import 'package:marcacion_admin/src/modules/contract/model/contracts_model.dart';
 
 class ContractsProvider extends ChangeNotifier {
   User? user;
 
   bool isReady = false;
   bool loading = false;
-  List<dynamic> contracts = [];
   int total = 0;
 
   updatePassword() async {
@@ -36,6 +36,7 @@ class ContractsProvider extends ChangeNotifier {
     }
   }
 
+  List<Contract> contracts = [];
   Future<bool> getContracts([load = false]) async {
     try {
       if (load) {
@@ -43,12 +44,8 @@ class ContractsProvider extends ChangeNotifier {
         notifyListeners();
       }
       final resp = await DioConexion.get_('/contracts');
-      // final response = EmployesResponse.fromJson(resp);
-
-      // employes = response.data.employes;
-      // quantity = response.data.pagination.quantity;
-      // page = response.data.pagination.page;
-      // total = response.data.pagination.total;
+      final response = ContractsResponse.fromJson(resp);
+      contracts = response.data;
       return true;
     } catch (e) {
       return false;
@@ -62,7 +59,7 @@ class ContractsProvider extends ChangeNotifier {
 
   Future<bool> deleteContracts(String id) async {
     try {
-      await DioConexion.delete_('/employes/$id');
+      await DioConexion.delete_('/contracts/$id');
       NotificationsService.showSnackbarSuccess("Empleado Eliminada");
       await getContracts();
       return true;

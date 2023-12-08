@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
-import 'package:marcacion_admin/src/common/services/navigation_service.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
+import 'package:marcacion_admin/src/modules/contract/model/contracts_model.dart';
 import 'package:marcacion_admin/src/modules/contract/viewmodel/contracts_provider.dart';
 import 'package:provider/provider.dart';
 
 class ContractsTDS extends DataTableSource {
-  final List<dynamic> contracts;
+  final List<Contract> contracts;
   final BuildContext context;
   final int total;
 
@@ -22,13 +22,12 @@ class ContractsTDS extends DataTableSource {
           MaterialStateColor.resolveWith((states) => const Color(0XFFFFFFFF)),
       index: index,
       cells: [
-        DataCell(Text("contract.empCodigo")),
-        DataCell(Text("contract.empNombres")),
-        DataCell(Text("contract.empApellidos")),
-        DataCell(Text("contract.empFechaNacimiento")),
-        DataCell(Text("contract.marcaGenGenero.genNombre")),
-        DataCell(Text("contract.marcaCnContratacion.cnNombre")),
-        DataCell(Text("contract.marcaUbiUbicacion.ubiNombre")),
+        DataCell(Text(contract.ctrNombre)),
+        DataCell(Text(contract.ctrNumeroContrato)),
+        DataCell(Text(contract.marcaEmpreEmpresas.empreNombre)),
+        DataCell(Text(contract.ctrFechaInicio)),
+        DataCell(Text(contract.ctrFechaFin)),
+        DataCell(Text(contract.ctrFechaInicioPro.isEmpty ? "NO" : "SI")),
         DataCell(
           Row(
             children: [
@@ -55,13 +54,13 @@ class ContractsTDS extends DataTableSource {
                       children: [
                         Image.asset("assets/icons/borrarred.png"),
                         Text(
-                          'Eliminar ${contract.empNombres}',
+                          'Eliminar ${contract.ctrNombre}',
                           style: const TextStyle(color: error),
                         ),
                       ],
                     ),
                     content: const Text(
-                      '¿Confirmas que deseas eliminar a este empleado?',
+                      '¿Confirmas que deseas eliminar este contrato?',
                       style: TextStyle(color: primary),
                     ),
                     actions: [
@@ -80,7 +79,7 @@ class ContractsTDS extends DataTableSource {
                             onPress: () async {
                               await Provider.of<ContractsProvider>(context,
                                       listen: false)
-                                  .deleteContracts(contract.marcaEmpPk);
+                                  .deleteContracts(contract.marcaCtrPk);
 
                               Navigator.pop(context);
                             },
