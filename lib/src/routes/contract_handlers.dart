@@ -26,7 +26,8 @@ class ContractHandlers {
         .setCurrentPageUrl(Flurorouter.contractsRoute);
 
     if (authProvider.authStatus == AuthStatus.authenticated) {
-      return const FormContractsView();
+      String? uuid = params['uuid']?.first;
+      return FormContractsView(uuid: uuid);
     } else {
       return const LoginView();
     }

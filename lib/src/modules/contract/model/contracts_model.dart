@@ -112,16 +112,20 @@ class Contract {
 
 class MarEprEmpresas {
   final String eprNombre;
+  final String eprCodigo;
 
   MarEprEmpresas({
     required this.eprNombre,
+    required this.eprCodigo,
   });
 
   factory MarEprEmpresas.fromJson(Map<String, dynamic> json) => MarEprEmpresas(
-        eprNombre: json["epr_nombre"],
+        eprNombre: json["epr_nombre"] ?? '',
+        eprCodigo: json["epr_codigo"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
         "epr_nombre": eprNombre,
+        "epr_codigo": eprCodigo,
       };
 }

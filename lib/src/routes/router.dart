@@ -23,6 +23,7 @@ class Flurorouter {
   static String reportsRoute = '/reports';
   static String contractsRoute = '/contracts';
   static String contractsCreateRoute = '/contracts/create';
+  static String contractsEditRoute = '/contracts/update/:uuid';
 
   static void configureRoutes() {
     // Auth Routes
@@ -64,7 +65,6 @@ class Flurorouter {
       handler: EmployesHandlers.editEmploye,
       transitionType: TransitionType.none,
     );
-
     // empresas
     router.define(
       companiesRoute,
@@ -94,6 +94,12 @@ class Flurorouter {
     );
     router.define(
       contractsCreateRoute,
+      handler: ContractHandlers.form,
+      transitionType: TransitionType.none,
+    );
+
+    router.define(
+      contractsEditRoute,
       handler: ContractHandlers.form,
       transitionType: TransitionType.none,
     );
