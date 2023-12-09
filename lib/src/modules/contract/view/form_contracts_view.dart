@@ -32,21 +32,23 @@ class AddContractsBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ContractsProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: ListView(
         physics: const ClampingScrollPhysics(),
-        children: const [
+        children: [
           BreadCrumWidget(
-            title: 'Contratos / Nuevo contrato',
+            title:
+                'Contratos / ${provider.uuid != null ? "Actualizar" : "Crear"} contrato',
           ),
-          SizedBox(height: 50),
-          Padding(
+          const SizedBox(height: 50),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: GoBackWidget(),
           ),
-          SizedBox(height: 30),
-          Padding(
+          const SizedBox(height: 30),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: Text(
               "Completa los campos. Al terminar da clic en el botón “Guardar”.",
@@ -56,8 +58,8 @@ class AddContractsBodyWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 50),
-          _FormewContractsWidget()
+          const SizedBox(height: 50),
+          const _FormewContractsWidget()
         ],
       ),
     );
