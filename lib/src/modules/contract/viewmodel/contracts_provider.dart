@@ -3,6 +3,7 @@ import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/modules/contract/model/companies_model.dart';
 import 'package:marcacion_admin/src/modules/contract/model/contracts_model.dart';
+import 'package:marcacion_admin/src/routes/router.dart';
 
 class ContractsProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -80,6 +81,15 @@ class ContractsProvider extends ChangeNotifier {
     if (uuid == null) await cleanForm();
   }
 
+  loadToSchedules(uui) async {
+    uuid = uui;
+    if (uuid == null) NavigationService.replaceTo(Flurorouter.contractsRoute);
+    await getRegister();
+    if (contract == null) {
+      NavigationService.replaceTo(Flurorouter.contractsRoute);
+    }
+  }
+
   Future<bool> cleanForm() async {
     try {
       contractName.text = '';
@@ -100,11 +110,12 @@ class ContractsProvider extends ChangeNotifier {
     }
   }
 
+  Contract? contract;
   Future<bool> getRegister() async {
     try {
       final resp = await DioConexion.get_('/contracts/$uuid');
       final response = Contract.fromJson(resp['data']);
-
+      contract = response;
       contractName.text = response.ctrNombre;
       contractsNumber.text = response.ctrNumContrato;
       startDate.text = response.ctrFechaInicio;

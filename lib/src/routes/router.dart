@@ -24,84 +24,91 @@ class Flurorouter {
   static String contractsRoute = '/contracts';
   static String contractsCreateRoute = '/contracts/create';
   static String contractsEditRoute = '/contracts/update/:uuid';
+  static String contractsSchedulesRoute = '/contracts/schedules/:uuid';
 
   static void configureRoutes() {
+    TransitionType transitionType = TransitionType.none;
     // Auth Routes
     router.define(
       rootRoute,
       handler: AuthHandlers.login,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
     router.define(
       loginRoute,
       handler: AuthHandlers.login,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // Dashboard
     router.define(
       dashboardRoute,
       handler: DashboardHandlers.dashboard,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // Ver employes
     router.define(
       employesRoute,
       handler: EmployesHandlers.list,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // agregar empleados
     router.define(
       employeAddRoute,
       handler: EmployesHandlers.addEmploye,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // editar empleados
     router.define(
       employeEditRoute,
       handler: EmployesHandlers.editEmploye,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
     // empresas
     router.define(
       companiesRoute,
       handler: CompaniesHandlers.list,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // Perfil
     router.define(
       userProfileRoute,
       handler: UserHandlers.view,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // reportes
     router.define(
       reportsRoute,
       handler: ReportsHandlers.view,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
 
     // Contratos/ proyectos
     router.define(
       contractsRoute,
       handler: ContractHandlers.view,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
     router.define(
       contractsCreateRoute,
       handler: ContractHandlers.form,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
     );
-
     router.define(
       contractsEditRoute,
       handler: ContractHandlers.form,
-      transitionType: TransitionType.none,
+      transitionType: transitionType,
+    );
+
+    router.define(
+      contractsSchedulesRoute,
+      handler: ContractHandlers.schedules,
+      transitionType: transitionType,
     );
 
     // 404
