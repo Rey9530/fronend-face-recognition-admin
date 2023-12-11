@@ -112,6 +112,8 @@ class TableEmployesContract extends StatelessWidget {
       width: double.infinity,
       child: SingleChildScrollView(
         child: PaginatedDataTable(
+          dataRowMinHeight: 60,
+          dataRowMaxHeight: 65,
           columns: [
             DataColumn(label: Text('Nombres', style: style)),
             DataColumn(label: Text('Apellidos', style: style)),

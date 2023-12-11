@@ -122,22 +122,31 @@ class EmployesProvider extends ChangeNotifier {
             employeContact.text.length > 10 ? employeContact.text : null,
         "marca_asig_hour":
             employeHours.text.length > 10 ? employeHours.text : null,
+        "emp_fecha_pro_incio":
+            employeDateStart.text.length > 5 ? employeDateStart.text : null,
+        "emp_fecha_pro_fin":
+            employeDateEnd.text.length > 5 ? employeDateEnd.text : null,
       };
       if (uuid != null) {
-        await DioConexion.put_('/employes/$uuid', data);
-        NotificationsService.showSnackbarSuccess("Empleado Actualizada");
+        var res = await DioConexion.put_('/employes/$uuid', data);
+        if (res['status'] == 200) {
+          NotificationsService.showSnackbarSuccess("Empleado Actualizada");
+          NavigationService.goBack();
+        }
       } else {
-        await DioConexion.post_('/employes', data);
-        NotificationsService.showSnackbarSuccess("Empleado Creada");
+        var res = await DioConexion.post_('/employes', data);
+        if (res['status'] == 200) {
+          NotificationsService.showSnackbarSuccess("Empleado Creada");
+          NavigationService.goBack();
+        }
       }
       await getEmployes();
-      NavigationService.goBack();
       return true;
     } catch (e) {
       return false;
     } finally {
       loading = false;
-      // limpiar();
+      notifyListeners();
     }
   }
 

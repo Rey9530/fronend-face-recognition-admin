@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/modules/contract/model/index.dart';
+import 'package:marcacion_admin/src/modules/employees/model/hours_ctr_mode.dart';
 import 'package:marcacion_admin/src/routes/router.dart';
 
 class ContractsProvider extends ChangeNotifier {
@@ -151,9 +152,32 @@ class ContractsProvider extends ChangeNotifier {
     if (uuid == null) NavigationService.replaceTo(Flurorouter.contractsRoute);
     await getRegister();
     await getEmpContracts();
+    await getHoursContracts(uuid ?? '');
     employes = [];
     if (contract == null) {
       NavigationService.replaceTo(Flurorouter.contractsRoute);
+    }
+  }
+
+  List<HoursCtr> hoursCtr = [];
+  bool loadingHours = false;
+  Future getHoursContracts(String idCtr) async {
+    try {
+      if (idCtr.length < 10) return;
+      if (loading) return;
+      loadingHours = true;
+      notifyListeners();
+      var resp = await DioConexion.get_('/employes/get/contracts/hours/$idCtr');
+      var code = HoursCtrResponse.fromJson(resp);
+      hoursCtr = code.data;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    } finally {
+      loadingHours = false;
+      notifyListeners();
     }
   }
 
@@ -328,6 +352,19 @@ class ContractsProvider extends ChangeNotifier {
     } finally {
       loading = false;
       notifyListeners();
+    }
+  }
+
+  updateScheduleEmpCtr(asiCode, codHor) async {
+    try {
+      await DioConexion.put_(
+        '/contracts/schedule/$asiCode/$codHor',
+        {},
+      );
+    } catch (e) {
+      return;
+    } finally {
+      return;
     }
   }
 

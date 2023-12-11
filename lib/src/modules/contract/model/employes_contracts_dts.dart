@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
+import 'package:marcacion_admin/src/common/models/dropdown_buttom_data_model.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
 import 'package:marcacion_admin/src/modules/contract/model/index.dart';
 import 'package:marcacion_admin/src/modules/contract/viewmodel/contracts_provider.dart';
@@ -17,6 +18,7 @@ class EmployesContractsTDS extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     final contract = contracts[index];
+    var provider = Provider.of<ContractsProvider>(context, listen: false);
     return DataRow.byIndex(
       color:
           MaterialStateColor.resolveWith((states) => const Color(0XFFFFFFFF)),
@@ -27,7 +29,32 @@ class EmployesContractsTDS extends DataTableSource {
         DataCell(Text(contract.marEmpEmpleados.empCodigoEmp)),
         DataCell(Text(contract.marEmpEmpleados.marConContrataciones.conNombre)),
         DataCell(Text(contract.marEmpEmpleados.marUbiUbicaciones.ubiNombre)),
-        DataCell(Text(contract.asiCodhor)),
+        DataCell(
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            width: 200,
+            child: SelectCompaniesWidget(
+              controller: TextEditingController(),
+              title: '',
+              selected: DropdownButtonData(
+                id: contract.asiCodhor,
+                title: "",
+              ),
+              onChange: (val) async {
+                await provider.updateScheduleEmpCtr(contract.asiCodigo, val.id);
+              },
+              items: [
+                ...provider.hoursCtr.map(
+                  (e) => DropdownButtonData(
+                    id: e.horCodigo,
+                    title: e.horNombre,
+                  ),
+                ),
+              ],
+            ),
+            // Text(contract.asiCodhor),
+          ),
+        ),
         DataCell(
           IconButton(
             onPressed: () {

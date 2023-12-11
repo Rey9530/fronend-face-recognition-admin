@@ -1,7 +1,7 @@
 class ErrorResponse {
   final DateTime time;
   final String path;
-  final String data;
+  final dynamic data;
   final String message;
   final int status;
 
