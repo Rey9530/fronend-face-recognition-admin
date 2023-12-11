@@ -26,6 +26,7 @@ class EmployesProvider extends ChangeNotifier {
   List<Company> companies = [];
   List<Contratation> contratations = [];
   List<Gender> genders = [];
+  List<ContractsEmp> contractsEmp = [];
 
   int page = 1;
   int quantity = 10;
@@ -81,7 +82,14 @@ class EmployesProvider extends ChangeNotifier {
       employeLocation =
           TextEditingController(text: response.marUbiUbicaciones.ubiCodigo);
       employeCompany = TextEditingController(text: response.empCodemp);
-      // employeContact = TextEditingController(text: "");//TODO: PENDIENTE
+      await getContracts(response.empCodemp);
+      if (response.marAsiAsignacion.isNotEmpty) {
+        employeContact = TextEditingController(
+            text: response.marAsiAsignacion[0]['mar_hor_horarios']
+                ['mar_ctr_contratos']['ctr_codigo']);
+      } else {
+        employeContact = TextEditingController(text: "");
+      }
       // employeHours = TextEditingController(text: "");//TODO: PENDIENTE
       employeContratation =
           TextEditingController(text: response.marConContrataciones.conCodigo);
@@ -110,6 +118,10 @@ class EmployesProvider extends ChangeNotifier {
         "marca_emp_gen": employeGender.text,
         "marca_emp_ubi": employeLocation.text,
         "marca_emp_cn": employeContratation.text,
+        "marca_asig_proy":
+            employeContact.text.length > 10 ? employeContact.text : null,
+        "marca_asig_hour":
+            employeHours.text.length > 10 ? employeHours.text : null,
       };
       if (uuid != null) {
         await DioConexion.put_('/employes/$uuid', data);
@@ -166,7 +178,48 @@ class EmployesProvider extends ChangeNotifier {
       return false;
     } finally {
       loading = false;
-      // notifyListeners();
+    }
+  }
+
+  Future getContracts(String idEmp) async {
+    try {
+      if (idEmp.length < 10) return;
+      if (loading) return;
+      loading = true;
+      notifyListeners();
+      var resp = await DioConexion.get_('/employes/get/contracts/$idEmp');
+      var code = ContractsEmpResponse.fromJson(resp);
+      contractsEmp = code.data;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    } finally {
+      loading = false;
+      notifyListeners();
+    }
+  }
+
+  List<HoursCtr> hoursCtr = [];
+  bool loadingHours = false;
+  Future getHoursContracts(String idCtr) async {
+    try {
+      if (idCtr.length < 10) return;
+      if (loading) return;
+      loadingHours = true;
+      notifyListeners();
+      var resp = await DioConexion.get_('/employes/get/contracts/hours/$idCtr');
+      var code = HoursCtrResponse.fromJson(resp);
+      hoursCtr = code.data;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    } finally {
+      loadingHours = false;
+      notifyListeners();
     }
   }
 
@@ -180,12 +233,10 @@ class EmployesProvider extends ChangeNotifier {
   }
 
   Future getCatalogos(String? uui) async {
+    contractsEmp = [];
+    hoursCtr = [];
     uuid = uui;
     await getCatalogs();
-    // await getSedes();
-    // await getCompanies();
-    // await getContratation();
-    // await getGenders();
     if (uuid != null) {
       await getEmploye();
     } else {

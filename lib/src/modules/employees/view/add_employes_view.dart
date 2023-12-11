@@ -33,21 +33,23 @@ class AddEmployeBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<EmployesProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: ListView(
         physics: const ClampingScrollPhysics(),
-        children: const [
+        children: [
           BreadCrumWidget(
-            title: 'Empleados / Nuevo empleado',
+            title:
+                'Empleados / ${provider.uuid != null ? "${provider.employeName.text} ${provider.employeSurname.text}" : "Nuevo empleado"}',
           ),
-          SizedBox(height: 50),
-          Padding(
+          const SizedBox(height: 50),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: GoBackWidget(),
           ),
-          SizedBox(height: 30),
-          Padding(
+          const SizedBox(height: 30),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: Text(
               "Completa los campos. Al terminar da clic en el botón “Guardar”.",
@@ -57,8 +59,8 @@ class AddEmployeBodyWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 50),
-          _FormewEmployeWidget()
+          const SizedBox(height: 50),
+          const _FormewEmployeWidget()
         ],
       ),
     );
@@ -224,7 +226,9 @@ class _FormewEmployeWidget extends StatelessWidget {
                   child: SelectCompaniesWidget(
                     controller: provider.employeCompany,
                     title: 'Empresa',
-                    onChange: (val) {},
+                    onChange: (val) async {
+                      await provider.getContracts(val.id);
+                    },
                     selected: DropdownButtonData(
                       id: provider.employeCompany.text,
                       title: provider.employeCompany.text,
@@ -243,33 +247,13 @@ class _FormewEmployeWidget extends StatelessWidget {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   width: 400,
-                  child: SelectCompaniesWidget(
-                    controller: provider.employeContact,
-                    isRequired: false,
-                    isDisable: true,
-                    title: 'Código de contrato',
-                    items: [
-                      DropdownButtonData(id: '1', title: '1'),
-                      DropdownButtonData(id: '2', title: '2'),
-                      DropdownButtonData(id: '3', title: '3'),
-                    ],
-                  ),
+                  child: const _SelectContractsWidget(),
                 ),
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   width: 200,
-                  child: SelectCompaniesWidget(
-                    isRequired: false,
-                    isDisable: true,
-                    controller: provider.employeHours,
-                    title: 'Horario',
-                    items: [
-                      DropdownButtonData(id: '1', title: '1'),
-                      DropdownButtonData(id: '2', title: '2'),
-                      DropdownButtonData(id: '3', title: '3'),
-                    ],
-                  ),
+                  child: const SelectHoursWidget(),
                 ),
                 Container(
                   margin:
@@ -386,6 +370,66 @@ class _FormewEmployeWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class SelectHoursWidget extends StatelessWidget {
+  const SelectHoursWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<EmployesProvider>(context);
+    return provider.loadingHours
+        ? const CircularProgressIndicator()
+        : SelectCompaniesWidget(
+            controller: provider.employeHours,
+            title: 'Horario',
+            selected: DropdownButtonData(
+              id: provider.employeHours.text,
+              title: provider.employeHours.text,
+            ),
+            items: [
+              ...provider.hoursCtr.map(
+                (e) => DropdownButtonData(
+                  id: e.horCodigo,
+                  title: e.horNombre,
+                ),
+              ),
+            ],
+          );
+  }
+}
+
+class _SelectContractsWidget extends StatelessWidget {
+  const _SelectContractsWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<EmployesProvider>(context);
+    return provider.loading
+        ? const CircularProgressIndicator()
+        : SelectCompaniesWidget(
+            controller: provider.employeContact,
+            isRequired: false,
+            title: 'Código de contrato',
+            selected: DropdownButtonData(
+              id: provider.employeContact.text,
+              title: provider.employeContact.text,
+            ),
+            onChange: (val) async {
+              await provider.getHoursContracts(val.id);
+            },
+            items: [
+              ...provider.contractsEmp.map(
+                (e) => DropdownButtonData(
+                  id: e.ctrCodigo,
+                  title: e.ctrNombre,
+                ),
+              )
+            ],
+          );
   }
 }
 

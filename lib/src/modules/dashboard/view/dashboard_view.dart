@@ -112,7 +112,7 @@ class Employes1Widget extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             const Text(
               "vs el mes pasado.",
               style: TextStyle(
