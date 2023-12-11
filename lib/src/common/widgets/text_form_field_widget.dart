@@ -16,12 +16,22 @@ class TextFormFieldCustomWidget extends StatefulWidget {
     this.onFieldSubmitted,
     this.isDark = false,
     this.autofocus = false,
+    this.readOnly = false,
     this.suffixIcon,
+    this.contentPadding,
+    this.fontSize,
+    this.fontWeight = FontWeight.w500,
+    this.textAlign = TextAlign.start,
     this.floatingLabelBehavior = FloatingLabelBehavior.always,
     this.inputFormatters,
   });
+  final FontWeight fontWeight;
+  final TextAlign textAlign;
+  final double? fontSize;
+  final EdgeInsetsGeometry? contentPadding;
   final bool isDark;
   final bool autofocus;
+  final bool readOnly;
   final Function? onChange;
   final Function(String)? onFieldSubmitted;
   final String label;
@@ -63,6 +73,8 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: widget.textAlign,
+      readOnly: widget.readOnly,
       autofocus: widget.autofocus,
       inputFormatters: widget.inputFormatters,
       onFieldSubmitted: widget.onFieldSubmitted,
@@ -87,10 +99,12 @@ class _TextFormFieldCustomWidgetState extends State<TextFormFieldCustomWidget> {
       },
       style: TextStyle(
         color: widget.isDark ? getTheme(context).primary : Colors.white,
-        fontWeight: FontWeight.w500,
+        fontWeight: widget.fontWeight,
+        fontSize: widget.fontSize,
       ),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        contentPadding: widget.contentPadding,
         floatingLabelBehavior: widget.floatingLabelBehavior,
         suffixIcon: widget.isPassword
             ? GestureDetector(

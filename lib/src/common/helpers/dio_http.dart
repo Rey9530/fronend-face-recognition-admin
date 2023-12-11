@@ -27,7 +27,7 @@ class DioConexion {
     return response.data;
   }
 
-  static Future post_(String endpoint, Map<String, dynamic> data) async {
+  static Future post_(String endpoint, dynamic data) async {
     // final formData = FormData.fromMap(data);
 
     try {

@@ -25,6 +25,10 @@ const textGray = Color(0XFF454B54);
 const textGraySubtitle = Color(0XFF9A9FA0);
 const headerRowTable = Color(0XFFF3F3F4);
 const hintextPassword = Color(0XFFBBBBBB);
+const borderColorContainers = Color(0XFF1E3350);
+const colorContainers = Color(0XFFF1F2F2);
+
+const disabledIcons = Color(0XFFD2D2D2);
 
 ///
 const infoBackground = Color(0XFF3C4E65);

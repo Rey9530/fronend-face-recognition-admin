@@ -3,7 +3,7 @@ import 'package:marcacion_admin/src/common/const/const.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
-import 'package:marcacion_admin/src/modules/contract/model/contracts_dts.dart';
+import 'package:marcacion_admin/src/modules/contract/model/index.dart';
 import 'package:marcacion_admin/src/modules/contract/viewmodel/contracts_provider.dart';
 import 'package:marcacion_admin/src/routes/router.dart';
 import 'package:provider/provider.dart';

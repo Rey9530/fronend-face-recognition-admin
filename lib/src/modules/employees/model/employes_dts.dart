@@ -23,7 +23,7 @@ class EmployesTDS extends DataTableSource {
           MaterialStateColor.resolveWith((states) => const Color(0XFFFFFFFF)),
       index: index,
       cells: [
-        DataCell(Text(employe.empCodigo)),
+        DataCell(Text(employe.empCodigoEmp)),
         DataCell(Text(employe.empNombres)),
         DataCell(Text(employe.empApellidos)),
         DataCell(Text(employe.empFechaNacimiento)),

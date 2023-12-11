@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:marcacion_admin/src/common/const/const.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
 import 'package:marcacion_admin/src/common/models/dropdown_buttom_data_model.dart';
-import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/common/widgets/widgets.dart';
 import 'package:marcacion_admin/src/modules/employees/viewmodel/employes_provider.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -440,38 +439,6 @@ class _SelectGenderWidgetState extends State<SelectGenderWidget> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class GoBackWidget extends StatelessWidget {
-  const GoBackWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      child: InkWell(
-        onTap: () {
-          NavigationService.goBack();
-        },
-        child: Row(
-          children: [
-            Icon(
-              Icons.arrow_back,
-              color: getTheme(context).primary,
-              size: 30,
-            ),
-            const SizedBox(width: 10),
-            const Text(
-              "Regresar",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

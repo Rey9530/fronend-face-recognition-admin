@@ -65,9 +65,8 @@ class Companie {
         eprFeccrea: DateTime.parse(json["epr_feccrea"]),
         eprFecmod: DateTime.parse(json["epr_fecmod"]),
         eprEstado: json["epr_estado"],
-        eprCodusr: json["epr_codusr"],
+        eprCodusr: json["epr_codusr"] ?? '',
       );
-
   Map<String, dynamic> toJson() => {
         "epr_codigo": eprCodigo,
         "epr_nombre": eprNombre,

@@ -5,3 +5,4 @@ export 'package:marcacion_admin/src/common/widgets/button_widget.dart';
 export 'package:marcacion_admin/src/common/widgets/outline_button_widget.dart';
 export 'package:marcacion_admin/src/common/widgets/select_widget.dart';
 export 'package:marcacion_admin/src/common/widgets/not_data_widget.dart';
+export 'package:marcacion_admin/src/common/widgets/go_back_widget.dart';

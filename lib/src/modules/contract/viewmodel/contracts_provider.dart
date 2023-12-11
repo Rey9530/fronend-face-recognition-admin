@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marcacion_admin/src/common/services/services.dart';
 import 'package:marcacion_admin/src/common/helpers/helpers.dart';
-import 'package:marcacion_admin/src/modules/contract/model/companies_model.dart';
-import 'package:marcacion_admin/src/modules/contract/model/contracts_model.dart';
+import 'package:marcacion_admin/src/modules/contract/model/index.dart';
 import 'package:marcacion_admin/src/routes/router.dart';
 
 class ContractsProvider extends ChangeNotifier {
@@ -25,6 +24,10 @@ class ContractsProvider extends ChangeNotifier {
 
   changeIsExtendable(valor) {
     isExtendable = valor;
+    notifyListeners();
+  }
+
+  notifyListens() {
     notifyListeners();
   }
 
@@ -74,11 +77,63 @@ class ContractsProvider extends ChangeNotifier {
     }
   }
 
+  List<EmpSchedule> emplContract = [];
+  Future<bool> getEmpContracts([load = false]) async {
+    try {
+      if (load) {
+        loading = true;
+        notifyListeners();
+      }
+      final resp = await DioConexion.get_(
+        '/contracts/list/employes/${contract!.ctrCodigo}',
+      );
+      final response = EmployesScheduleResponse.fromJson(resp);
+      emplContract = response.data;
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      if (load) {
+        loading = false;
+      }
+      notifyListeners();
+    }
+  }
+
   loadData(uui) async {
     uuid = uui;
     await getCompanies();
     if (uuid != null) await getRegister();
     if (uuid == null) await cleanForm();
+  }
+
+  agregarItem(codeEmp) async {
+    try {
+      await DioConexion.post_(
+        '/contracts/employe/${contract!.ctrCodigo}/$codeEmp',
+        {},
+      );
+      await getEmpContracts();
+    } catch (e) {
+      return;
+    } finally {
+      employes = [];
+      query = '';
+      notifyListeners();
+    }
+  }
+
+  Future<bool> deleteEmploye(String id) async {
+    try {
+      await DioConexion.delete_('/contracts/employe/$id');
+      NotificationsService.showSnackbarSuccess("Empleado Eliminado");
+      await getEmpContracts();
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      notifyListeners();
+    }
   }
 
   loadToSchedules(uui) async {
@@ -87,6 +142,77 @@ class ContractsProvider extends ChangeNotifier {
     await getRegister();
     if (contract == null) {
       NavigationService.replaceTo(Flurorouter.contractsRoute);
+    }
+    await getDays();
+  }
+
+  loadToEmployes(uui) async {
+    uuid = uui;
+    if (uuid == null) NavigationService.replaceTo(Flurorouter.contractsRoute);
+    await getRegister();
+    await getEmpContracts();
+    employes = [];
+    if (contract == null) {
+      NavigationService.replaceTo(Flurorouter.contractsRoute);
+    }
+  }
+
+  String query = '';
+
+  List<EmployesContract> employes = [];
+  Future<bool> getEmployes([load = false]) async {
+    if (query.length < 3) {
+      employes = [];
+      notifyListeners();
+      return false;
+    }
+    try {
+      if (load) {
+        loading = true;
+        notifyListeners();
+      }
+      final resp = await DioConexion.get_(
+        '/contracts/get/employes/${contract!.ctrCodigo}',
+        {
+          "page": 1,
+          "quantity": 10,
+          "query": query,
+          "company": company,
+        },
+      );
+      final response = EmployesContractResponse.fromJson(resp);
+      employes = response.data;
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      if (load) {
+        loading = false;
+      }
+      notifyListeners();
+    }
+  }
+
+  List<Day> days = [];
+  List<Schedule> schedule = [];
+  Future<bool> getDays() async {
+    try {
+      final resp = await DioConexion.get_('/contracts/get/days');
+      final response = DaysResponse.fromJson(resp);
+      days = response.data;
+      schedule = [];
+      for (var day in days) {
+        schedule.add(Schedule(
+          day: day,
+          entrada1: TextEditingController(),
+          salida1: TextEditingController(),
+          entrada2: TextEditingController(),
+          salida2: TextEditingController(),
+        ));
+      }
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
@@ -103,7 +229,6 @@ class ContractsProvider extends ChangeNotifier {
       endDateExtendable.text = '';
       return true;
     } catch (e) {
-      print(e.toString());
       return false;
     } finally {
       notifyListeners();
@@ -128,7 +253,6 @@ class ContractsProvider extends ChangeNotifier {
       endDateExtendable.text = response.ctrFechaFinpro;
       return true;
     } catch (e) {
-      print(e.toString());
       return false;
     }
   }
@@ -167,12 +291,15 @@ class ContractsProvider extends ChangeNotifier {
       if (uuid != null) {
         await DioConexion.put_('/contracts/$uuid', data);
         NotificationsService.showSnackbarSuccess("Contrato Actualizado");
+        NavigationService.goBack();
       } else {
-        await DioConexion.post_('/contracts', data);
+        var respo = await DioConexion.post_('/contracts', data);
         NotificationsService.showSnackbarSuccess("Contrato creado");
+        NavigationService.navigateTo(
+          "/contracts/schedules/${respo["data"]["ctr_codigo"]}",
+        );
       }
       await getContracts();
-      NavigationService.goBack();
       return true;
     } catch (e) {
       return false;
@@ -182,10 +309,32 @@ class ContractsProvider extends ChangeNotifier {
     }
   }
 
+  Future saveScheduleContract() async {
+    try {
+      if (loading) return;
+      loading = true;
+      notifyListeners();
+      var data = RequestSchedule(list: schedule).toJson();
+      await DioConexion.post_(
+        '/contracts/schedule/${contract?.ctrCodigo}',
+        data,
+      );
+      NavigationService.navigateTo(
+        "/contracts/employes/${contract?.ctrCodigo}",
+      );
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      loading = false;
+      notifyListeners();
+    }
+  }
+
   Future<bool> deleteContracts(String id) async {
     try {
       await DioConexion.delete_('/contracts/$id');
-      NotificationsService.showSnackbarSuccess("Empleado Eliminada");
+      NotificationsService.showSnackbarSuccess("Contrato Eliminado");
       await getContracts();
       return true;
     } catch (e) {

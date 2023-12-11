@@ -25,6 +25,7 @@ class Flurorouter {
   static String contractsCreateRoute = '/contracts/create';
   static String contractsEditRoute = '/contracts/update/:uuid';
   static String contractsSchedulesRoute = '/contracts/schedules/:uuid';
+  static String contractsEmployesRoute = '/contracts/employes/:uuid';
 
   static void configureRoutes() {
     TransitionType transitionType = TransitionType.none;
@@ -108,6 +109,12 @@ class Flurorouter {
     router.define(
       contractsSchedulesRoute,
       handler: ContractHandlers.schedules,
+      transitionType: transitionType,
+    );
+
+    router.define(
+      contractsEmployesRoute,
+      handler: ContractHandlers.employes,
       transitionType: transitionType,
     );
 
