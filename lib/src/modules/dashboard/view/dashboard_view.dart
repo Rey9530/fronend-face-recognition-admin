@@ -18,6 +18,7 @@ class DashboardView extends StatelessWidget {
           BreadCrumWidget(
             title: 'Dashboar',
           ),
+          SizedBox(height: 20),
           BodyDashboardWidget(),
         ],
       ),
