@@ -6,6 +6,9 @@ const museoSans = 'MuseoSans';
 ///Colors Principales
 const primary = Color(0XFF0C223F);
 const secondary = Color(0XFF313945);
+const secondary40 = Color(0XFFF3F3F4);
+const secondary80 = Color(0XFF6C7178);
+const secondary60 = Color(0XFFC1C4C7);
 const tertiary = Color(0XFFD0D2D3);
 const neutral = Color(0XFF16A4F8);
 const error = Color(0XFFFF4220);
